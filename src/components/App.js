@@ -1,8 +1,17 @@
 import '../styles/App.css';
 import Banner from './Banner';
+import Login from './Login';
+
 
 function App() {
-    return <Banner/>
+    return (
+        <div>
+   <Banner/>
+ <Login/>
+ </div>
+    )
 }
+
+
 
 export default App;
