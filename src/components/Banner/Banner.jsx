@@ -1,4 +1,4 @@
-import '../../styles/Banner.css';
+import './Banner.css';
 import logoblack from '../../assets/logoblack.png';
 
 function Banner() {
