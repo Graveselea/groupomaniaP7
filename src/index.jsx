@@ -1,8 +1,8 @@
 
 import React from 'react'
 import { createRoot } from 'react-dom/client';
-import { createGlobalStyle } from 'styled-components';
-
+import GlobalStyle from './utils/style/GlobalStyle';
+import {  ThemeProvider } from './utils/context/context'
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom'
 import Posts from './pages/Posts/Posts'
 import Home from './pages/Home/Home'
@@ -12,15 +12,12 @@ import Error from './components/Error/Error'
 const container = document.getElementById('root');
 const root = createRoot(container); 
 
-const GlobalStyle = createGlobalStyle`
-    div {
-      font-family: 'Lato', sans-serif;
-    }
-`
+
 
 root.render(
   <React.StrictMode>
     <Router>
+    <ThemeProvider>
       <GlobalStyle />
       <Header />
       <Routes>
@@ -31,6 +28,7 @@ root.render(
         <Route element={<Error />}>
          </Route>
         </Routes>
+        </ThemeProvider>
     </Router>
   </React.StrictMode>,
 

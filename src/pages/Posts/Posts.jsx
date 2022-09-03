@@ -1,7 +1,10 @@
 import DefaultPicture from '../../assets/profile.png'
 import Post from '../../components/Post/Post'
 import styled from 'styled-components'
- 
+import { useState } from 'react'
+import Loader from '../../utils/style/Atoms'
+import { useFetch } from '../../utils/hooks/Hooks'
+
 const freelanceProfiles = [
     {
         name: 'Jane Doe',
@@ -28,10 +31,16 @@ const PostsContainer = styled.div`
 `
 
 function Posts() {
+    const { data, isLoading } = useFetch(`http://localhost:8000/survey`)
+    const { surveyData } = data
+
+
+ 
   return (
       <div>
           <h1>Freelances 👩‍💻👨‍💻👩‍💻</h1>
           <PostsContainer>
+          <Loader />
           {freelanceProfiles.map((profile, index) => (
               <Post
                   key={`${profile.name}-${index}`}
