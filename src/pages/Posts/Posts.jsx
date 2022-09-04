@@ -1,10 +1,12 @@
 import DefaultPicture from '../../assets/profile.png'
 import Post from '../../components/Post/Post'
 import styled from 'styled-components'
-import { useState } from 'react'
 import Loader from '../../utils/style/Atoms'
 import { useFetch } from '../../utils/hooks/Hooks'
-
+import Button from 'react-bootstrap/Button';
+import Form from 'react-bootstrap/Form';
+import InputGroup from 'react-bootstrap/InputGroup';
+import './Posts.css'
 const freelanceProfiles = [
     {
         name: 'Jane Doe',
@@ -31,36 +33,36 @@ const PostsContainer = styled.div`
 `
 
 function Posts() {
-    const { data, isLoading } = useFetch(`http://localhost:8000/survey`)
-    const { surveyData } = data
+    // const { data, isLoading, error } = useFetch(`http://localhost:8000/survey`)
+    // const { surveyData } = data
 
+    // if (error) {
 
+    //     return <span>Il y a un problème</span>
+        
+    //     }
  
   return (
-      <div>
-          <h1>Freelances 👩‍💻👨‍💻👩‍💻</h1>
-          <PostsContainer>
-          <Loader />
-          {freelanceProfiles.map((profile, index) => (
-              <Post
-                  key={`${profile.name}-${index}`}
-                  label={profile.jobTitle}
-                  picture={profile.picture}
-                  title={profile.name}
-              />
-          ))}
-          </PostsContainer>
-      </div>
+    <><div className='addPost'>
+          <InputGroup className='input-group'>
+              <Form.Control
+                  className='form-control-posts'
+                  placeholder="How are you today ?"
+                  aria-label="Recipient's post with two button addons" />
+
+          </InputGroup>
+          <div className="button-post">
+              <Form.Group controlId="formFile" className="formFile">
+                  <Form.Control classname="title-file" type="file" />
+              </Form.Group>
+              <Button className= "button-post-petit" variant="outline-secondary">Post !</Button>
+          </div>
+      <hr></hr><Post></Post><Post></Post><Post></Post><Post></Post>
+</div>
+</>
   )
 }
 
-{freelanceProfiles.map((profile, index) => (
-  <Post
-      key={`${profile.name}-${index}`}
-      label={profile.jobTitle}
-      picture={profile.picture}
-      title={profile.title}
-  />
-))}
+
 
 export default Posts

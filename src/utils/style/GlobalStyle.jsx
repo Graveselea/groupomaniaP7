@@ -14,6 +14,7 @@ font-family: 'Lato', sans-serif;
 }
  
     body {
+        background-image: url("../../assets/fond.png");
         background-color: ${({ isDarkMode }) => (isDarkMode ? 'black' : 'white')};
         margin: 0;  
     }

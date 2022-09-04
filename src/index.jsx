@@ -8,6 +8,7 @@ import Posts from './pages/Posts/Posts'
 import Home from './pages/Home/Home'
 import Header from './components/Header/Header'
 import Error from './components/Error/Error'
+import "bootstrap/dist/css/bootstrap.min.css"
 
 const container = document.getElementById('root');
 const root = createRoot(container); 

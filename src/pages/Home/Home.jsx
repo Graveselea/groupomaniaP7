@@ -1,12 +1,11 @@
 import './Home.css';
-import Banner from '../../components/Banner/Banner';
 import Login from '../../components/Login/Login';
+import "bootstrap/dist/css/bootstrap.min.css"
 
 
 function Home() {
     return (
         <div>
-   <Banner/>
  <Login/>
  </div>
     )

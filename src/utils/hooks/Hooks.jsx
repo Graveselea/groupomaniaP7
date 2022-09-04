@@ -30,7 +30,7 @@ export function useFetch(url) {
     
     } catch (err) {
     
-    console.log(gerr)
+    console.log(err)
     
     setError(true)
     

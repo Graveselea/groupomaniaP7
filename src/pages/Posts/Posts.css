@@ -1,0 +1,47 @@
+.input-group {
+  margin: 0 auto;
+  width: 50%;
+  margin-top: 40px;
+  margin-bottom: 40px;}
+
+.addPost {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    margin-top: 40px;
+    padding: 0 10px;
+    box-sizing: border-box;
+      background-image: url("../../assets/fond.png");
+
+}
+
+.formFile input {
+    border-radius: 10px  10px 10px 10px;
+}
+
+.button-post-petit {
+    margin-left: 30px;
+}
+
+.title-file {
+  border-radius: 0;
+}
+
+.button-post {
+  height:40px;
+    margin-top: -40px;
+  display: flex;
+  flex-direction: row;
+    border-radius: 0;
+    color: #fff;
+    font-size: 1.2rem;
+    font-weight: 700;
+    cursor: pointer;
+}
+
+.form-control-posts {
+  height: 100px;
+  width: 50px
+}
