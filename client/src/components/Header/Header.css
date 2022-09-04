@@ -8,7 +8,6 @@ margin-right: 50px;}
     .button-header {
  
         margin-left: 40px;
-        
         background-color: white;
         border: 1px solid white;
         border-radius: 5px;
@@ -20,3 +19,30 @@ margin-right: 50px;}
         text-transform: uppercase;
         transition: all 0.3s ease 0s;
     }
+
+    .toggleoff {
+        cursor:pointer;
+        margin-left: 10px;
+        background-color: #000000;
+        color: #ffffff;
+        border-radius: 5px;
+        height: 40px;
+        width:60px;
+    }
+    
+    .cardchecklist {
+        cursor:pointer;
+
+        margin-left:500px;
+        background-color: #ffffff;
+        color: #000000;
+        border-radius: 5px;
+        height: 40px;
+        width:60px;
+        
+    }
+
+    .header {
+        margin-top: -100px;
+    }
+

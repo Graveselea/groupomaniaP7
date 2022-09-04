@@ -8,6 +8,7 @@ import Posts from './pages/Posts/Posts'
 import Home from './pages/Home/Home'
 import Header from './components/Header/Header'
 import Error from './components/Error/Error'
+import Rules from './components/Rules/Rules'
 import "bootstrap/dist/css/bootstrap.min.css"
 
 
@@ -27,8 +28,8 @@ function App() {
     <div className="App">
         <Router>
         <TokenContext.Provider value={[token, setToken]}>
-                    <UserIdContext.Provider value={[userId, setUserId]}>
-                        <NameContext.Provider value={[name, setName]}>
+        <UserIdContext.Provider value={[userId, setUserId]}>
+          <NameContext.Provider value={[name, setName]}>
     <ThemeProvider>
       <GlobalStyle />
       <Header />
@@ -36,6 +37,8 @@ function App() {
         <Route exact path="/" element={<Home />}>
         </Route>
         <Route path="/Posts/" element={<Posts />}>
+        </Route>
+        <Route path="/Rules/" element={<Rules />}>
         </Route>
         <Route component={<Error />}>
          </Route>
