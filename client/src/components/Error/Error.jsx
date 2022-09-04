@@ -1,11 +1,13 @@
 import './Error.css'
 
-function Error() {
-    return (
-        <div className="error404">
-            <h1 className="title-error">Oups 🙈 Cette page n'existe pas</h1>
-        </div>
-    )
+import React, { Component } from "react";
+
+class Error extends Component {
+    render() {
+        return (
+            <h1>Page non trouvée</h1>
+        );
+    }
 }
- 
+
 export default Error

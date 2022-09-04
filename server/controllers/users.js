@@ -1,6 +1,7 @@
 const { User } = require("../models/mongo");
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
+require("dotenv").config();//--Package de configuration des variables d’environnement
 
 // création profil utilisateur
 async function createUser(req, res) {

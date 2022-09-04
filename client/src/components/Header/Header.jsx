@@ -35,8 +35,12 @@ function Header() {
     <HeaderContainer>    
     <nav >        
       <img src={logowhite} alt="logo" className="gpm-banner-logo"/>
+      <a href="http://localhost:3000/">
       <Button className="button-header" variant="red" to="/">Home</Button>
+      </a>
+      <a href="http://localhost:3000/posts">
       <Button className="button-header" variant="red" to="/posts">Posts</Button>
+      </a>
     </nav>
       {/* <NightModeButton onClick={() => toggleTheme()}>
             Changer de mode : {theme === 'light' ? '☀️' : '🌙'}
