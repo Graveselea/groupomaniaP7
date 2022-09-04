@@ -2,10 +2,10 @@ POST http://localhost:8000/auth/signup HTTP/1.1
 Content-type: application/json
 
 {
-  "name":"admin", "email": "admin@groupomania.com", "password": "admin_2022"
+  "name":"bidule", "email": "bidule@groupomania.com", "password": "123456"
 }
 ###
-GET http://localhost:3001/posts/50/like HTTP/1.1
+GET http://localhost:8000/posts/50/like HTTP/1.1
 Content-Type: application/json
 Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImdyYXZhZ25hLmVsZWFAZ21haWwuY29tIiwiaWF0IjoxNjYxMzQxOTI3LCJleHAiOjE2NjE0MjgzMjd9.Uw0DtFtOYjWlW15bBjGmDB_jtH8aqDLp1funVOoVx9g
 
