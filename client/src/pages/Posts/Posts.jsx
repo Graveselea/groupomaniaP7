@@ -7,23 +7,7 @@ import Button from 'react-bootstrap/Button';
 import Form from 'react-bootstrap/Form';
 import InputGroup from 'react-bootstrap/InputGroup';
 import './Posts.css'
-const freelanceProfiles = [
-    {
-        name: 'Jane Doe',
-        jobTitle: 'Devops',
-        picture: DefaultPicture,
-    },
-    {
-        name: 'John Doe',
-        jobTitle: 'Developpeur frontend',
-        picture: DefaultPicture,
-    },
-    {
-        name: 'Jeanne Biche',
-        jobTitle: 'Développeuse Fullstack',
-        picture: DefaultPicture,
-    },
-]
+
 
 const PostsContainer = styled.div`
     display: grid;
@@ -33,7 +17,7 @@ const PostsContainer = styled.div`
 `
 
 function Posts() {
-    // const { data, isLoading, error } = useFetch(`http://localhost:8000/survey`)
+    // const { data, isLoading, error } = useFetch(`http://localhost:8000/`)
     // const { surveyData } = data
 
     // if (error) {
@@ -53,7 +37,7 @@ function Posts() {
           </InputGroup>
           <div className="button-post">
               <Form.Group controlId="formFile" className="formFile">
-                  <Form.Control classname="title-file" type="file" />
+                  <Form.Control className="title-file" type="file" />
               </Form.Group>
               <Button className= "button-post-petit" variant="outline-secondary">Post !</Button>
           </div>

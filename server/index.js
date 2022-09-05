@@ -13,6 +13,15 @@ app.use(bodyParser.json())
 app.use("/posts", postsRouter)
 app.use("/auth", authRouter)
 
+
+
+app.use((req, res, next) => {
+  res.setHeader('Access-Control-Allow-Origin', '*');
+  res.setHeader('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content, Accept, Content-Type, Authorization');
+  res.setHeader('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE, PATCH, OPTIONS');
+  next();
+});
+
 // Routes
 app.get("/", (req, res) => {
   // méthode GET sur chemin absolu + résulat dans premier argument sur le deuxième un objet

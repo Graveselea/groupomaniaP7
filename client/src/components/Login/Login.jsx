@@ -1,9 +1,7 @@
 import './Login.css'
 import React, { useRef, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
-import { TokenContext } from '../../App'
-import { UserIdContext } from '../../App'
-import { NameContext } from '../../App'
+import { TokenContext, UserIdContext, NameContext } from '../../App'
 
 
 // eslint-disable-next-line import/no-anonymous-default-export
@@ -23,9 +21,10 @@ export default function Log() {
 
   setToken(undefined)
   setUserId('')
+  console.log(token)
 
   const errors = {
-      name: "Ceci n'est pas un nom ou pseudonyme valide",
+      name: "Ceci n'est pas un nom valide",
       email: "Ceci n'est pas une adresse mail valide",
       pass: 'Votre mot de passe doit contenir au minimum 10 caractères, un chiffre, une minuscule, une majusle et un caratère spécial',
       ok: '',
@@ -91,6 +90,7 @@ export default function Log() {
           )
               .then((response) => response.json())
               .then((data) => {
+                  console.log(data)
                   setToken(data.token)
                   setUserId(data.userId)
                   setName(data.name)
@@ -232,7 +232,7 @@ export default function Log() {
                 Submit
               </button>
             </div>              
-            <p className="a-groupomania" class="mt-4 font-weight-bold">
+            <p className="a-groupomania">
                 @Groupomania !
             </p>
           </div>
@@ -293,7 +293,7 @@ export default function Log() {
               Submit
             </button>
           </div>
-          <p className="a-groupomania" class="mt-4 font-weight-bold">
+          <p className="a-groupomania" >
                 @Groupomania !
             </p>
         </div>

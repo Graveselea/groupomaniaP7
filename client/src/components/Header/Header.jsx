@@ -44,7 +44,7 @@ function Header() {
     navigate('/')
             //--Sweet Alert
             SwalLogOut.fire({
-                title: 'Au revoir et à bientôt !',
+                title: 'Au revoir et à bientôt  !',
                 text: '',
                 icon: 'success',
                 confirmButtonText: 'Ok'
@@ -72,14 +72,18 @@ function Header() {
                 <Icon.CardChecklist
                 className="cardchecklist"
                     onClick={rules}
-                    size="1x" /> }
+                    size="1x"
+                    height='100%'
+                    width='100%' /> }
                           
       {token === undefined && userId === '' ?
                 '' : 
                 <Icon.ToggleOff
                 className="toggleoff"
                     onClick={logout}
-                    size="1x" /> }
+                    size="1x"
+                    height='100%'
+                    width='100%' /> }
     </nav>
       {/* <NightModeButton onClick={() => toggleTheme()}>
             Changer de mode : {theme === 'light' ? '☀️' : '🌙'}
