@@ -95,7 +95,11 @@ export default function Log() {
                   setToken(data.token)
                   setUserId(data.userId)
                   setName(data.name)
-
+                  console.log(data.token)
+                  console.log(data)
+                  localStorage.setItem('token', JSON.stringify(data.token))
+                  localStorage.setItem('userId', JSON.stringify(data.userId))
+                  localStorage.setItem('name', JSON.stringify(data.name))
                   if (data.userId === undefined) {
                       SwalWelcome.fire({
                           title: '',
@@ -188,8 +192,9 @@ export default function Log() {
                       icon: 'success',
                       confirmButtonText: 'Ok',
                   })
-                  navigate('/posts')
+                  navigate('/')
                 })
+                setAuthMode ("signin")
       }
   }
 

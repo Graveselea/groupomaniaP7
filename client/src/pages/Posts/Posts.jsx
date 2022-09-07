@@ -204,19 +204,16 @@ export default function Posts() {
       </Loader>
     ) : (
     <><div className='addPost'>
-                        <div className="hello">Bienvenue {name} 🙂</div>
+           <div className="hello">Bienvenue {name} 🙂</div>
           <InputGroup className='input-group'>
-          <label htmlFor="post" className="titleCreatePost"></label>
-              <Form.Control onSubmit={handleSubmit}
+              <Form.Control 
                   className='form-control-posts'
                   placeholder="How are you today ?"
                   aria-label="Recipient's post with two button addons"
                         name="post"
                         type="text"
                         ref={addTextAreaAndImage} />
-          </InputGroup>
           <div className="button-post">
-          <label htmlFor="image" id='colorLabelChooseImage'></label>
               <Form.Group className="formFile">
                   <Form.Control 
                   className="title-file" 
@@ -227,8 +224,10 @@ export default function Posts() {
                     id="image"
                     alt="image postée par un utilisateur"/>
               </Form.Group>
-              <Button className= "button-post-petit" variant="outline-secondary" type="submit" value="Envoyer">Post !</Button>
-          </div>
+              <Button className= "button-post-petit" variant="outline-secondary" type="submit" onClick={handleSubmit} >Post !</Button>          
+          </div>              
+          </InputGroup>
+
       <hr></hr><div className="displayPosts">
                 {posts.map((post, index) => (
                     <Post key= {index} data={{ post, setPosts }} />

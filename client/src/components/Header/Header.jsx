@@ -1,8 +1,7 @@
-import { Link, useNavigate } from 'react-router-dom'
+import { useNavigate } from 'react-router-dom'
 import styled from 'styled-components'
 import colors from '../../utils/style/colors'
 import { useContext } from 'react'
-import { ThemeContext } from '../../utils/context/context'
 import logowhite from '../../assets/logowhite.png';
 import './Header.css'
 import Button from 'react-bootstrap/Button';
@@ -18,16 +17,6 @@ const HeaderContainer = styled.header`
     background-color: ${colors.primary};
 `
 
-// const NightModeButton = styled.button`
-// background-color: transparent;
-// border: none;
-// color: ${colors.secondary};
-//     &:hover {
-//         cursor: pointer;
-//     }
-// `
-
-
 function Header() {
   // const { toggleTheme, theme } = useContext(ThemeContext)
   let [token, setToken] = useContext(TokenContext)
@@ -37,7 +26,9 @@ function Header() {
   const navigate = useNavigate()
   const SwalLogOut = require('sweetalert2')
 
-  const logout = (e) => {
+
+  const logout = (e) => {        
+    localStorage.clear()
     setToken(undefined)
     setUserId('')
     setName(undefined)
@@ -85,10 +76,6 @@ function Header() {
                     height='100%'
                     width='100%' /> }
     </nav>
-      {/* <NightModeButton onClick={() => toggleTheme()}>
-            Changer de mode : {theme === 'light' ? '☀️' : '🌙'}
-        </NightModeButton> */}
-
 </div> 
         </HeaderContainer>
   )

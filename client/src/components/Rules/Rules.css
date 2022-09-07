@@ -1,0 +1,15 @@
+rules-title h1 {
+    font-size: 2rem;
+    font-weight: bold;
+    margin-top: 20px;
+    margin-bottom: 1rem;
+}
+
+.body-rules {
+    background-color: #FFD7D7;
+    display: flex;
+    margin: 30px 100px;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
