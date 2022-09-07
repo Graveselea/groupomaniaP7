@@ -5,7 +5,7 @@ import React, {
     useEffect, 
     useRef
 } from 'react'
-import { TokenContext, NameContext } from '../../App'
+import { TokenContext, NameContext, UserIdContext } from '../../App'
 import Button from 'react-bootstrap/Button';
 import Form from 'react-bootstrap/Form';
 import InputGroup from 'react-bootstrap/InputGroup';
@@ -15,13 +15,19 @@ import Loader from '../../utils/style/Atoms';
 
 
 export default function Posts() {
+    const [users, setUsers] = useState(null)
     const SwalWelcome = require('sweetalert2')
     
+    /*   const navigate = useNavigate(); */
+
     let [token, setToken] = React.useContext(TokenContext)
+    let [userId, setUserId] = React.useContext(UserIdContext)
     let [name, setName] = React.useContext(NameContext)
 
     const [isLoading, setIsLoading] = useState(true)
+    const [errorMessage, setErrorMessage] = useState("");
     const [posts, setPosts] = useState(null)
+    const [user, setUser] = useState(null)
 
     //Affichage des posts
 
@@ -38,6 +44,7 @@ export default function Posts() {
         fetch('http://localhost:8000/posts', requestOptions)
             .then((response) => response.json())
             .then((data) => {
+                console.log(data)
                 const posts = data.slice().sort(function (a, b) {
                     return new Date(b.createdAt) - new Date(a.createdAt)
                 })
@@ -199,7 +206,7 @@ export default function Posts() {
     <><div className='addPost'>
                         <div className="hello">Bienvenue {name} 🙂</div>
           <InputGroup className='input-group'>
-          <label for="post" className="titleCreatePost"></label>
+          <label htmlFor="post" className="titleCreatePost"></label>
               <Form.Control onSubmit={handleSubmit}
                   className='form-control-posts'
                   placeholder="How are you today ?"
@@ -209,8 +216,8 @@ export default function Posts() {
                         ref={addTextAreaAndImage} />
           </InputGroup>
           <div className="button-post">
-          <label for="image" id='colorLabelChooseImage'></label>
-              <Form.Group controlId="formFile" className="formFile">
+          <label htmlFor="image" id='colorLabelChooseImage'></label>
+              <Form.Group className="formFile">
                   <Form.Control 
                   className="title-file" 
                   type="file"                             
@@ -224,7 +231,7 @@ export default function Posts() {
           </div>
       <hr></hr><div className="displayPosts">
                 {posts.map((post, index) => (
-                    <Post data={{ post, setPosts }} />
+                    <Post key= {index} data={{ post, setPosts }} />
                 ))}
             </div>
 </div>

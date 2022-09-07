@@ -68,7 +68,7 @@ function login  (req, res, next) {
 //--Argument 1 : payload = Données que l'on encode si on veut en encoder
                         { userId: user._id },
 //--Argumnt 2 : Clé secrète pour l'encodage
-                        process.env.RANDOM_TOKEN_SECRET,
+                        process.env.SECRET,
 //--Argument 3 de configuration : Le token expirera au bout de 24h
                         { expiresIn: '24h' }
                     )

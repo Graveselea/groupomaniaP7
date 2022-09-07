@@ -1,5 +1,5 @@
 import './Login.css'
-import React, { useRef, useState } from 'react'
+import React, { useRef, useState, useEffect } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { TokenContext, UserIdContext, NameContext } from '../../App'
 
@@ -12,6 +12,7 @@ export default function Log() {
     setAuthMode(authMode === "signin" ? "signup" : "signin")
   }
   const [errorMessages, setErrorMessages] = useState({})
+  
   const navigate = useNavigate()
   const SwalWelcome = require('sweetalert2')
 
@@ -19,8 +20,10 @@ export default function Log() {
   let [userId, setUserId] = React.useContext(UserIdContext)
   let [name, setName] = React.useContext(NameContext)
 
+  useEffect(() => {
   setToken(undefined)
   setUserId('')
+}, []);
 
   const errors = {
       name: "Ceci n'est pas un nom valide",
@@ -89,7 +92,6 @@ export default function Log() {
           )
               .then((response) => response.json())
               .then((data) => {
-                  console.log(data)
                   setToken(data.token)
                   setUserId(data.userId)
                   setName(data.name)
@@ -192,7 +194,7 @@ export default function Log() {
   }
 
   if (authMode === "signin") {
-    return (
+    return  (
       <div className="Auth-form-container">
         <form className="Auth-form" onSubmit={handleFormSignIn}>
           <div className="Auth-form-content">
@@ -204,7 +206,7 @@ export default function Log() {
               </span>
             </div>
             <div className="form-group mt-3">
-              <label for="emailSignIn">Email address</label>
+              <label htmlFor="emailSignIn">Email address</label>
               <input
                 type="email"
                 className="form-control mt-1"
@@ -212,17 +214,19 @@ export default function Log() {
                 ref={addInputsSignIn}
                 id="emailSignIn"
                 name="emailSignIn"
+                autoComplete="username"
               />
               {renderErrorMessage('emailErrorSignIn')}
             </div>
             <div className="form-group mt-3">
-              <label for="passwordSignIn">Password</label>
+              <label htmlFor="passwordSignIn">Password</label>
               <input
-              for="passwordSignIn"
+              htmlFor="passwordSignIn"
                 type="password"
                 className="form-control mt-1"
                 placeholder="Enter password"
                 ref={addInputsSignIn}
+                autoComplete="current-password"
               />
            {renderErrorMessage('passErrorSignIn')}
             </div>
@@ -252,7 +256,7 @@ export default function Log() {
             </span>
           </div>
           <div className="form-group mt-3">
-            <label for="nameSignUp" >Full Name</label>
+            <label htmlFor="nameSignUp" >Full Name</label>
             <input
               type="name"
               className="form-control mt-1"
@@ -264,7 +268,7 @@ export default function Log() {
             {renderErrorMessage('nameErrorSignUp')}
           </div>
           <div className="form-group mt-3">
-            <label for="emailSignUp">Email address</label>
+            <label htmlFor="emailSignUp">Email address</label>
             <input
               type="email"
               className="form-control mt-1"
