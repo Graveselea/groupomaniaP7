@@ -1,37 +1,59 @@
-const { app, express } = require("./app")
-const { postsRouter } = require("./routes/posts.router")
-const { authRouter } = require("./routes/auth.router")
-const port = 8000; // port d'écoute du serveur
-const path = require("path") // appel path déjà installé avec node
-const bodyParser = require("body-parser") 
+const http = require('http');//--Import du package http de node
+const app = require('./app');
+const path = require('path');
+const fs = require('fs');
 
-// Connection to database
-require("./models/mongo.js")
+//--Création du dossier images s'il n'existe pas
+if (!fs.existsSync(__dirname + "/images")) {
+   fs.mkdirSync(path.join(__dirname, "images"))
+};
 
-// Middleware
-app.use(bodyParser.json())
-app.use("/posts", postsRouter)
-app.use("/auth", authRouter)
+//--Renvoie un port valide, qu'il soit fourni sous la forme d'un numéro ou d'une chaîne ;
+const normalizePort = val => {
+  const port = parseInt(val, 10);
 
+  if (isNaN(port)) {
+    return val;
+  }
+  if (port >= 0) {
+    return port;
+  }
+  return false;
+};
 
+const port = normalizePort(process.env.PORT || '8000');
+app.set('port', port);
 
-app.use((req, res, next) => {
-  res.setHeader('Access-Control-Allow-Origin', '*');
-  res.setHeader('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content, Accept, Content-Type, Authorization');
-  res.setHeader('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE, PATCH, OPTIONS');
-  next();
+//--Recherche les différentes erreurs et les gère de manière appropriée. Puis s'enregistre dans le serveur ;
+const errorHandler = error => {
+  if (error.syscall !== 'listen') {
+    throw error;
+  }
+  const address = server.address();
+  const bind = typeof address === 'string' ? 'pipe ' + address : 'port: ' + port;
+  switch (error.code) {
+    case 'EACCES':
+      console.error(bind + ' requires elevated privileges.');
+      process.exit(1);
+      break;
+    case 'EADDRINUSE':
+      console.error(bind + ' is already in use.');
+      process.exit(1);
+      break;
+    default:
+      throw error;
+  }
+};
+
+const server = http.createServer(app);//--Cette fonction sera appellée à chaque requête de notre server
+
+server.on('error', errorHandler);
+
+//--un écouteur d'évènements est également enregistré, consignant le port ou le canal nommé sur lequel le serveur s'exécute dans la console.
+server.on('listening', () => {
+  const address = server.address();
+  const bind = typeof address === 'string' ? 'pipe ' + address : 'port ' + port;
+  console.log('Listening on ' + bind);
 });
 
-// Routes
-app.get("/", (req, res) => {
-  // méthode GET sur chemin absolu + résulat dans premier argument sur le deuxième un objet
-  res.send("Hello World!") // serveur renvoie Hello World!
-})
-
-// Listen
-  // Affichage photo
-app.use("/images", express.static(path.join(__dirname, "images"))) // Middleware pour uploader une photo et le nom du dossier ne fait pas parti de l'url il faut donc ajouter le nom du dossier /images
-app.listen(port, () => {
-  // function sans argument qui écoute un port + résultat
-  console.log(`Listening on port ${port}`)
-});
+server.listen(port);//--Ecoute/Attend les reqêtes du server

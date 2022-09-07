@@ -21,7 +21,6 @@ export default function Log() {
 
   setToken(undefined)
   setUserId('')
-  console.log(token)
 
   const errors = {
       name: "Ceci n'est pas un nom valide",

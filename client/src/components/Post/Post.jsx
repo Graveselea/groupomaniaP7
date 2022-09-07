@@ -252,8 +252,7 @@ const Post = (props) => {
         }
     }
 
-    return post.userId === userId ||
-        name === process.env.REACT_APP_NAME ? (
+    return post.userId === userId ? (
         modification ? (
 <div className="displayPost">
                 <div className="conteneur">
