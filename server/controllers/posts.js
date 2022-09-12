@@ -1,5 +1,5 @@
 const { send } = require("process")
-const unlink = require("fs").promises.unlink // Supprime de manière asynchrone un fichier avec une promesse
+const fs = require("fs") // Supprime de manière asynchrone un fichier avec une promesse
 const path = require('path');
 const User = require('../models/userModel');
 const Post = require('../models/postModel');
@@ -38,8 +38,7 @@ function modifyPost (req, res, next)  {
             }
             User.findOne({ email: process.env.adminEmail })
         .then(user => { 
-          const adminUserId = user._id.toString()
-            if (post.userId !== req.auth.userId && req.auth.userId !== adminUserId) {
+            if (post.userId !== req.auth.userId) {
                 return res.status(403).json({
                     error: new Error('Requête non autorisée !')
                 })

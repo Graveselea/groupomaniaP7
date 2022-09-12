@@ -4,6 +4,7 @@ import Button from 'react-bootstrap/Button';
 import Form from 'react-bootstrap/Form';
 import InputGroup from 'react-bootstrap/InputGroup';
 import * as Icon from 'react-bootstrap-icons';
+import Modal from 'react-bootstrap/Modal';
 import './Post.css'
 import React, { useState, useRef } from 'react'
 import { TokenContext, UserIdContext, NameContext } from '../../App'
@@ -24,6 +25,10 @@ const Post = (props) => {
     const [commentsList, setCommentsList] = useState(null)
     const [postComment, setPostComment] = useState('')
     const [reload, setReload] = useState(true)
+    const [show, setShow] = useState(false);
+
+    const handleClose = () => setShow(false);
+    const handleShow = () => setShow(true);
 
     //Modification d'un post */
     //--Récupération de la saisie de textArea et de l'image
@@ -331,11 +336,14 @@ const Post = (props) => {
 
     return post.userId === userId  ? (
         modification ? (
+            <>
+            <Modal show={show} onHide={handleClose} animation={false}>
+        <Modal.Header closeButton>
+          <Modal.Title> Modify your post !</Modal.Title>
+        </Modal.Header>
+        <Modal.Body>
 <div className="displayPost">
                 <div className="conteneur">
-                    <h1 className="dispayNamePoster">
-                        Mode modification activé
-                    </h1>
                     <form onSubmit={sendModification} className="displayTexteareaModificationMode">
                         <textarea
                             name="post"
@@ -368,20 +376,23 @@ const Post = (props) => {
                         </div>
                     </form>
                 </div>
-            </div>
+            </div></Modal.Body>
+      </Modal>
+    </>
         ) : (
 <div className="post">
         <Card data-set={post._id} className="Card" border="danger" style={{ width: '28rem' }}>
         <Card.Header className='Card-header'>            
             <img src="../../assets/profile.png" alt="profil" style={{ width: '80px', height: '80px' }} />
-            <p className="dispayNamePoster">{post.name === name ? "Your post" : name}</p>
+            <p className="dispayNamePoster">{post.name === name ? "Your post" : post.name}</p>
                     <p className="dispayNamePoster2">{`${new Date(
                         post.createdAt
                     ).toLocaleDateString('fr')} at ${new Date(
                         post.createdAt
                     ).toLocaleTimeString('fr')}`}</p> 
             <Icon.Pencil className="iconPost"  id={post._id}
-                        onClick={() => setModification(true)} />
+                        onClick={() => {handleShow(); setModification(true) }} 
+                         />
             <Icon.Trash className="iconPost" id={post._id} onClick={(e) => handleDelete(e)} />
         </Card.Header>
         <Card.Body>

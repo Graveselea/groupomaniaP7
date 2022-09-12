@@ -41,9 +41,7 @@ export default function Posts() {
             .then((response) => response.json())
             .then((data) => {
                 console.log(data)
-                const posts = data.slice().sort(function (a, b) {
-                    return new Date(b.createdAt) - new Date(a.createdAt)
-                })
+                const posts = data
                 setPosts(posts)
                 SwalWelcome.fire({
                     title: `Bonjour ${name} !`,
@@ -102,12 +100,7 @@ export default function Posts() {
                     )
                         .then((response) => response.json())
                         .then((data) => {
-                            const posts = data.slice().sort(function (a, b) {
-                                return (
-                                    new Date(b.createdAt) -
-                                    new Date(a.createdAt)
-                                )
-                            })
+                            const posts = data
                             setPosts(posts)
                             form.reset()
                             setIsLoading(false)
@@ -138,12 +131,7 @@ export default function Posts() {
                     )
                         .then((response) => response.json())
                         .then((data) => {
-                            const posts = data.slice().sort(function (a, b) {
-                                return (
-                                    new Date(b.createdAt) -
-                                    new Date(a.createdAt)
-                                )
-                            })
+                            const posts = data
                             setPosts(posts)
                             form.reset()
                             setIsLoading(false)
@@ -174,12 +162,7 @@ export default function Posts() {
                     )
                         .then((response) => response.json())
                         .then((data) => {
-                            const posts = data.slice().sort(function (a, b) {
-                                return (
-                                    new Date(b.createdAt) -
-                                    new Date(a.createdAt)
-                                )
-                            })
+                            const posts = data
                             setPosts(posts)
                             form.reset()
                             setIsLoading(false)
@@ -205,7 +188,7 @@ export default function Posts() {
 
             <div className="displayCreatePost">
                 <div className="displayTitleCreatePost">
-                    <label for="post" className="titleCreatePost"></label>
+                    <label htmlFor="post" className="titleCreatePost"></label>
                 </div>
                 <form onSubmit={handleSubmit}>
                     <textarea
@@ -218,7 +201,7 @@ export default function Posts() {
                     ></textarea>
                     <div className="displayinputImageAndButtonPublish">
                         <div className='displayLabelAndInputImage'>
-                        <label for="image" id='colorLabelChooseImage' ></label>
+                        <label htmlFor="image" id='colorLabelChooseImage' ></label>
                         <input
                             name="image"
                             type="file"
