@@ -16,12 +16,14 @@ export const TokenContext = React.createContext()
 export const UserIdContext = React.createContext()
 export const NameContext = React.createContext()
 export const LogInContext = React.createContext()
+export const RulesInContext = React.createContext()
 
 function App() {
 
     const [token, setToken] = React.useState()
     const [userId, setUserId] = React.useState()
     const [name, setName] = React.useState()
+    const [rules, setRules] = React.useState()
 
 
     return (
@@ -30,6 +32,7 @@ function App() {
         <TokenContext.Provider value={[token, setToken]}>
         <UserIdContext.Provider value={[userId, setUserId]}>
           <NameContext.Provider value={[name, setName]}>
+          <RulesInContext.Provider value={[rules, setRules]}>
     <ThemeProvider>
       <GlobalStyle />
       <Header />
@@ -44,6 +47,7 @@ function App() {
          </Route>
         </Routes>
         </ThemeProvider>
+        </RulesInContext.Provider>
         </NameContext.Provider>
         </UserIdContext.Provider>
         </TokenContext.Provider>

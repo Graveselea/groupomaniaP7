@@ -12,7 +12,7 @@ function createPost  (req, res, next) {
       userId: req.auth.userId, 
       post: postObject,
       name: req.body.name,
-      imageUrl: `${req.protocol}://${req.get('host')}/images/${req.file?.filename}`//--Reconstruction de l'Url de l'image
+      imageUrl: `${req.protocol}://${req.get('host')}/images/${req.file?.filename}`,//--Reconstruction de l'Url de l'image
     });
     post.save()
       .then(() => res.status(201).json({ message: 'Post enregistré !'}))
@@ -66,8 +66,7 @@ function deletePost (req, res, next)  {
         }
         User.findOne({ email: process.env.adminEmail })
         .then(user => {
-          const adminUserId = user._id.toString()
-          if (post.userId !== req.auth.userId && req.auth.userId !== adminUserId) {
+          if (post.userId !== req.auth.userId ) {
               return res.status(403).json({ message: 'Requête non autorisée !'})
           }else {
             const filename = post.imageUrl.split('/images/')[1];//--Ici, split renvoit un tableau composé de deux éléments. 1- Ce qu'il y avant /images/ et un deuxième élément avec ce qu'il y après /images/
@@ -90,10 +89,75 @@ function getOnePost (req, res, next)  {
 
 //Récupération de tous les posts
 function getAllPosts (req, res, next) {
-    Post.find()
+    Post.find().sort({ createdAt: -1 })//--On récupère tous les posts et on les trie par date de création
         .then(posts => res.status(200).json(posts))
         .catch(error => res.status(400).json({ error }));
 };
+
+// comment the post
+function createComment(req, res, next) {
+  const comment = req.body.comment;
+  const userId = req.auth.userId;
+  const postId = req.params.id;
+  Post.findOne({ _id: postId })
+    .then(post => {
+      if (!post) {
+        return res.status(404).json({ message: 'Post non trouvée !' })
+      } else {
+        post.comments.push({ comment, userId });
+        post.save()
+          .then(() => res.status(201).json({ message: 'Commentaire enregistré !' }))
+          .catch(error => res.status(400).json({ error }));
+      }
+    })
+    .catch(error => res.status(500).json({ error }));
+};
+
+// delete the comment
+function deleteComment(req, res, next) {
+  const postId = req.params.id;
+  const commentId = req.params.commentId;
+  Post.findOne({ _id: postId })
+    .then(post => {
+      if (!post) {
+        return res.status(404).json({ message: 'Post non trouvée !' })
+      } else {
+        const comment = post.comments.find(comment => comment._id == commentId);
+        if (!comment) {
+          return res.status(404).json({ message: 'Commentaire non trouvée !' })
+        } else {
+          const userId = req.auth.userId;
+          User.findOne({ email: process.env.adminEmail })
+            .then(user => {
+              const adminUserId = user._id.toString()
+              if (comment.userId !== userId && userId !== adminUserId) {
+                return res.status(403).json({ message: 'Requête non autorisée !' })
+              } else {
+                post.comments.pull(commentId);
+                post.save()
+                  .then(() => res.status(200).json({ message: 'Commentaire supprimé !' }))
+                  .catch(error => res.status(400).json({ error }));
+              }
+            })
+        }
+      }
+    })
+    .catch(error => res.status(500).json({ error }));
+};
+
+function getAllComments(req, res, next) {
+  const postId = req.params.id;
+  Post.findOne({ _id: postId })
+    .then(post => {
+      if (!post) {
+        return res.status(404).json({ message: 'Post non trouvée !' })
+      } else {
+        res.status(200).json(post.comments);
+      }
+    })
+    .catch(error => res.status(500).json({ error }));
+};
+
 
 //Likes
 function likePost (req, res, next) {
@@ -137,4 +201,7 @@ module.exports = {
   getOnePost,
   getAllPosts,
   likePost,
+  createComment, 
+  deleteComment,
+  getAllComments,
 }

@@ -35,7 +35,7 @@ function Header() {
     navigate('/')
             //--Sweet Alert
             SwalLogOut.fire({
-                title: 'Au revoir et à bientôt  !',
+                title: 'See you soon !',
                 text: '',
                 icon: 'success',
                 confirmButtonText: 'Ok'

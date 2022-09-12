@@ -4,18 +4,7 @@
   margin-top: 40px;
   margin-bottom: 40px;}
 
-.addPost {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    width: 100%;
-    margin-top: 40px;
-    padding: 0 10px;
-    box-sizing: border-box;
-      background-image: url("../../assets/fond.png");
 
-}
 
 .formFile input {
     border-radius: 10px  10px 10px 10px;
@@ -40,8 +29,62 @@
     font-weight: 700;
     cursor: pointer;
 }
+body.swal2-shown > [aria-hidden="true"] {
+  transition: 0.1s filter;
+  filter: blur(10px);
+}
 
 .form-control-posts {
   height: 100px;
   width: 50px
+}
+
+.displayCreatePost {
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  margin-top: 40px;
+  padding: 0 10px;
+  box-sizing: border-box;
+}
+
+.displayTextArea {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  margin-top: 0px;
+  margin-bottom: 40px;
+  padding: 10px;
+  box-sizing: border-box;
+  border-radius: 10px;
+}
+
+.styleButton {
+  cursor:pointer;
+  background-color: red;
+  color: #ffffff;
+  border-radius: 5px;
+  height: 40px;
+  width:100px;
+}
+
+.displaySection {
+  width: 100%;
+  height: 100%;
+  background-image: url("../../assets/fond.png");
+
+}
+
+.displayinputImageAndButtonPublish {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  margin-top: 0px;
+  margin-bottom: 40px;
+  padding: 0 10px;
+  box-sizing: border-box;
 }

@@ -6,7 +6,31 @@ const multer = require('multer');
 //--Voici les trois différents MIME_TYPES que l'on peut avoir depuis le frontend
         'image/jpg': 'jpg',
         'image/jpeg': 'jpg',
-        'image/png': 'png'
+        'image/png': 'png',
+        'image/gif': 'gif',
+        'image/webp': 'webp',
+        'image/svg+xml': 'svg',
+        'image/tiff': 'tiff',
+        'image/bmp': 'bmp',
+        'image/vnd.microsoft.icon': 'ico',
+        'image/vnd.wap.wbmp': 'wbmp',
+        'image/x-icon': 'ico',
+        'image/x-jng': 'jng',
+        'image/x-ms-bmp': 'bmp',
+        'image/x-png': 'png',
+        'image/x-xbitmap': 'xbm',
+        'video/mp4': 'mp4',
+        'video/ogg': 'ogg',
+        'video/webm': 'webm',
+        'video/x-matroska': 'mkv',
+        'video/x-ms-asf': 'asf',
+        'video/x-ms-wmv': 'wmv',
+        'video/x-msvideo': 'avi',
+        'video/x-flv': 'flv',
+        'video/x-m4v': 'm4v',
+        'video/quicktime': 'mov',
+        
+
     };
 
 //--Objet de configuration pour multer

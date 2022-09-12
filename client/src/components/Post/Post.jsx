@@ -6,7 +6,6 @@ import InputGroup from 'react-bootstrap/InputGroup';
 import * as Icon from 'react-bootstrap-icons';
 import './Post.css'
 import React, { useState, useRef } from 'react'
-
 import { TokenContext, UserIdContext, NameContext } from '../../App'
 
 const Post = (props) => {
@@ -22,8 +21,10 @@ const Post = (props) => {
     const [like, setLike] = useState(true)
     const [annulation, setAnnulation] = useState(false)
     const [addLike, setAddLike] = useState(false)
+    const [commentsList, setCommentsList] = useState(null)
+    const [postComment, setPostComment] = useState('')
+    const [reload, setReload] = useState(true)
 
-         
     //Modification d'un post */
     //--Récupération de la saisie de textArea et de l'image
     const textAreaAndImage = useRef([])
@@ -31,9 +32,11 @@ const Post = (props) => {
         textAreaAndImage.current.push(el)
     }
 
+
     const sendModification = (event) => {
         event.preventDefault()
         const form = event.target
+        console.log(form)
         const postId = form[1].id
         const formData = new FormData()
         const requestOptionsModifiyPost = {
@@ -177,6 +180,75 @@ const Post = (props) => {
             })
     }
 
+    //Ajout d'un comment 
+    const createComments = () => {
+        if (commentsList !==null) {
+            return commentsList.map((comment) => {
+                return (
+                    <div key={comment.id} className="comments">
+                        <div className="comments__header">
+                            <div className="comments__header__user">
+                                <p className="comments__header__user__name">
+                                    {comment.user.name}
+                                </p>
+                            </div>
+                            {/* <div className="comments__header__date">
+                                {(comment.createdAt).format('DD/MM/YYYY')}
+                            </div> */}
+                        </div>
+                        <div className="comments__body">
+                            <p className="comments__body__text">{comment.comment}</p>
+                        </div>
+                    </div>
+                )
+            })
+        }
+    }
+
+    const handlePostComment = async (e) => {
+        e.preventDefault()
+        let postId = e
+        console.log(postId)
+        const requestOptions = {
+            method: 'GET',
+            headers: {
+                'Content-Type': 'application/json',
+                Authorization: 'Bearer ' + token,
+            },
+        }
+        const requestOptionsComment = {
+            method: 'POST',
+            headers: { Authorization: 'Bearer ' + token,
+                    Accept: 'application/json',
+                    'Content-Type': 'application/json', },
+        }
+         fetch('http://localhost:8000/' + postId + '/comments', {comment: postComment}, requestOptionsComment)
+        .then(result => {
+            if(result.status === 201) {
+                alert(result.body);
+                setReload(true)
+                setPostComment('')
+            }
+            
+        })
+        .then((data) => {
+            const newArrayPosts = fetch(
+                'http://localhost:8000/posts',
+                requestOptions
+            )
+                .then((response) => response.json())
+                .then((data) => {
+                    const posts = data.slice().sort(function (a, b) {
+                        return new Date(b.createdAt) - new Date(a.createdAt)
+                    })
+                    setPosts(posts)
+                })
+        })
+        .catch(error => console.log({error}))
+
+}
+
+
     //Like
     const handleLike = async (event) => {
         let postId = event
@@ -199,7 +271,7 @@ const Post = (props) => {
                     'Content-Type': 'application/json',
                 },
                 body: JSON.stringify({
-                    userId: userId,
+                    userId: userId, 
                     like: 1,
                 }),
             }
@@ -270,20 +342,20 @@ const Post = (props) => {
                             type="text"
                             className="displayTextAreaToModif"
                             ref={addTextAreaAndImage}
-                            placeholder="Si vous le souhaitez, vous pouvez saisir du texte dans cette zone et choisir un image avec le boutton ci-dessous"
+                            placeholder="Modify your post"
                         ></textarea>
                         <div className="displayButtons">
                             <input
                                 id={post._id}
                                 className="styleButton fontSizeSend"
                                 type="submit"
-                                name="envoyer"
+                                name="POST"
                             ></input>
                             <input
                                 name="image"
                                 type="file"
                                 ref={addTextAreaAndImage}
-                                accept="image/png, image/jpeg"
+                                accept="*"
                                 alt="image poster par un utilisateur"
                                 id="image"
                             />
@@ -291,7 +363,7 @@ const Post = (props) => {
                                 className="styleButton fontSizeAnnulation"
                                 onClick={() => setModification(false)}
                             >
-                                Annuler
+                                CANCEL
                             </button>
                         </div>
                     </form>
@@ -300,16 +372,15 @@ const Post = (props) => {
         ) : (
 <div className="post">
         <Card data-set={post._id} className="Card" border="danger" style={{ width: '28rem' }}>
-        <Card.Header>            
+        <Card.Header className='Card-header'>            
             <img src="../../assets/profile.png" alt="profil" style={{ width: '80px', height: '80px' }} />
-            <h1 className="dispayNamePoster">{post.name === name ? "Votre post" : post.name}</h1>
-                    <h1 className="dispayNamePoster">{`Publié le ${new Date(
+            <p className="dispayNamePoster">{post.name === name ? "Your post" : name}</p>
+                    <p className="dispayNamePoster2">{`${new Date(
                         post.createdAt
-                    ).toLocaleDateString('fr')} à ${new Date(
+                    ).toLocaleDateString('fr')} at ${new Date(
                         post.createdAt
-                    ).toLocaleTimeString('fr')}`}</h1> 
+                    ).toLocaleTimeString('fr')}`}</p> 
             <Icon.Pencil className="iconPost"  id={post._id}
-                        className="styleButton widthButtonModify"
                         onClick={() => setModification(true)} />
             <Icon.Trash className="iconPost" id={post._id} onClick={(e) => handleDelete(e)} />
         </Card.Header>
@@ -340,15 +411,17 @@ const Post = (props) => {
                     </div>
         </Card.Body>
         <InputGroup className="mb-3">
-        <Form.Control
-          placeholder="Comment"
-          aria-label="Recipient's comment"
-          aria-describedby="basic-addon2"
-        />
-        <Button variant="outline-secondary" id="button-addon2">
-          Comment !
-        </Button>
-      </InputGroup>
+        <div className='comments'>
+                    <form  onSubmit={handlePostComment} className={'form__comment'} method={'POST'} >
+                        <textarea
+                        placeholder="Add a comment !"
+                        aria-label="Recipient's comment"
+                        aria-describedby="basic-addon2" onChange={(e) => setPostComment(e.target.value)} required id={'comment'} name={'comment'} value={postComment}></textarea>
+                        <Button variant="outline-secondary" id="button-addon2" type={'submit'}>Comment !</Button>
+                    </form>
+                    {createComments()}
+                </div>
+      </InputGroup> 
       </Card>
       </div>
     )
@@ -357,12 +430,12 @@ const Post = (props) => {
         <Card className="Card" border="danger" style={{ width: '28rem' }}>
         <Card.Header>            
             <img src="../../assets/profile.png" alt="profil" style={{ width: '80px', height: '80px' }} />
-            <h1 className="dispayNamePoster">Publié par : {post.name}</h1>
-                <h1 className="dispayNamePoster">
-                    {`Publié le ${new Date(post.createdAt).toLocaleDateString(
+            <p className="dispayNamePoster">Publié par : {post.name}</p>
+                <p className="dispayNamePoster2">
+                    {` ${new Date(post.createdAt).toLocaleDateString(
                         'fr'
-                    )} à ${new Date(post.createdAt).toLocaleTimeString('fr')}`}
-                </h1>
+                    )} at ${new Date(post.createdAt).toLocaleTimeString('fr')}`}
+                </p>
             
         </Card.Header>
         <Card.Body>
@@ -390,17 +463,23 @@ const Post = (props) => {
                             <p className="numberOfLikes">{post.likes}</p>
                         </div>
                     </div>
-        </Card.Body>
-        <InputGroup className="mb-3">
-        <Form.Control
-          placeholder="Comment"
-          aria-label="Recipient's comment"
-          aria-describedby="basic-addon2"
-        />
-        <Button variant="outline-secondary" id="button-addon2">
-          Comment !
-        </Button>
-      </InputGroup>
+               <InputGroup className="InputComment">
+        <div className='comments'>
+                    <form  onSubmit={handlePostComment} className={'form__comment'} method={'POST'} >
+                        <textarea
+                        placeholder="Add a comment !"
+                        aria-label="Recipient's comment"
+                        className='commentarea'
+                        aria-describedby="basic-addon2" onChange={(e) => setPostComment(e.target.value)} required id={'comment'} name={'comment'} value={postComment}></textarea>
+                        <Button variant="outline-secondary" id="button-addon2" type={'submit'}>Comment !</Button>
+                    </form>
+                    {createComments()}
+                </div>
+      </InputGroup> 
+      </Card.Body>
+
+ 
+
       </Card>
       </div>
     )

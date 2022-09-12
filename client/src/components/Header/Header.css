@@ -22,7 +22,7 @@ margin-right: 50px;}
 
     .toggleoff {
         cursor:pointer;
-        margin-left: 10px;
+        margin-left: 40px;
         background-color: #000000;
         color: #ffffff;
         border-radius: 5px;
@@ -32,17 +32,22 @@ margin-right: 50px;}
     
     .cardchecklist {
         cursor:pointer;
-
-        margin-left:500px;
+        margin-left: 40px;
         background-color: #ffffff;
         color: #000000;
         border-radius: 5px;
         height: 40px;
         width:60px;
-        
     }
 
     .header {
-        margin-top: -100px;
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        justify-content: space-between;
+        width: 100%;
+        padding: 0 10px;
+        box-sizing: border-box;
+
     }
 
