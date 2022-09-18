@@ -41,8 +41,9 @@ function modifyPost(req, res, next) {
         error: new Error("Post non trouvée !"),
       });
     }
-    User.findOne({ email: process.env.adminEmail }).then((user) => {
-      if (post.userId !== req.auth.userId) {
+    User.findOne({ email: process.env.ADMIN_EMAIL }).then((user) => {
+      const adminUserId = user._id.toString();
+      if (post.userId !== req.auth.userId && req.auth.userId !== adminUserId) {
         return res.status(403).json({
           error: new Error("Requête non autorisée !"),
         });
@@ -70,8 +71,12 @@ function deletePost(req, res, next) {
       if (!post) {
         return res.status(404).json({ message: "Post non trouvée !" });
       }
-      User.findOne({ email: process.env.adminEmail }).then((user) => {
-        if (post.userId !== req.auth.userId) {
+      User.findOne({ email: process.env.ADMIN_EMAIL }).then((user) => {
+        const adminUserId = user._id.toString();
+        if (
+          post.userId !== req.auth.userId &&
+          req.auth.userId !== adminUserId
+        ) {
           return res.status(403).json({ message: "Requête non autorisée !" });
         } else {
           const filename = post.imageUrl.split("/images/")[1]; //--Ici, split renvoit un tableau composé de deux éléments. 1- Ce qu'il y avant /images/ et un deuxième élément avec ce qu'il y après /images/

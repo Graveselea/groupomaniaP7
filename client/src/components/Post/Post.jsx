@@ -250,8 +250,6 @@ const Post = (props) => {
       body: JSON.stringify({
         userId: userId,
         comment,
-        comment,
-        name,
         name,
       }),
     };
@@ -402,11 +400,11 @@ const Post = (props) => {
             {post.comments
               .map((comment, index) => (
                 <div key={index} className="display-comment">
-                  <h1 className="dispay-avatar-commentator">
+                  <p className="dispay-avatar-commentator">
                     <img src="" alt="Avatar du commenteur" />
-                  </h1>
+                  </p>
                   <div className="display-name-commentator-and-text">
-                    <h2 className="name-commentator">{comment.name} :</h2>
+                    <p className="name-commentator">{comment.name} :</p>
                     <p className="display-commentator-text">
                       {comment.comment}
                     </p>
@@ -476,11 +474,11 @@ const Post = (props) => {
         {post.comments
           .map((comment, index) => (
             <div className="display-comment">
-              <h1 className="dispay-avatar-commentator">
+              <p className="dispay-avatar-commentator">
                 <img src="" alt="Avatar du commenteur" />
-              </h1>
+              </p>
               <div className="display-name-commentator-and-text">
-                <h2 className="name-commentator">{comment.name} :</h2>
+                <p className="name-commentator">{comment.name} :</p>
                 <p className="display-commentator-text">{comment.comment}</p>
               </div>
             </div>

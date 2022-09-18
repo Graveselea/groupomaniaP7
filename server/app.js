@@ -6,7 +6,8 @@ const bodyParser = require("body-parser");
 const { postsRouter } = require("./routes/posts.router");
 const { authRouter } = require("./routes/auth.router");
 const { usersRoutes } = require("./routes/users.router");
-
+const User = require("./models/userModel");
+const bcrypt = require("bcrypt");
 //--Connection à la base de données
 mongoose
   .connect(
@@ -30,6 +31,35 @@ app.use((req, res, next) => {
     "GET, POST, PUT, DELETE, PATCH, OPTIONS"
   );
   next();
+});
+
+//--Création compte admin s'il n'existe pas)
+User.findOne({ email: process.env.ADMIN_EMAIL }).then((user) => {
+  //--Si l'utilisateur n'existe pas
+  if (!user) {
+    //--Hashage du mot de passe (fondtion asynchrone)
+    bcrypt
+      .hash(
+        //--Récupération du mot de passe envoyé par le frontend dans le corps de la requête
+        process.env.ADMIN_PASSWORD,
+        //--Nombre d'exécution de l'algorihme de hashage
+        10
+      )
+      .then((hash) => {
+        const user = new User({
+          //--Crée le compte de l'administrateur s'il nexiste pas
+          name: process.env.ADMIN_NAME,
+          email: process.env.ADMIN_EMAIL,
+          password: hash,
+          isAdmin: true,
+        });
+        user
+          .save() //--Enregistrement de l'utilisateur dans la base de donnée et envoi de l'userId et du token au frontend
+          .then(() => console.log("Admin créé"))
+          .catch((error) => console.log(error));
+      })
+      .catch((error) => console.log(error));
+  }
 });
 
 //--Intercepte toutes les requêtes qui ont un content-type json et met à disposition ce corps de requête sur l'objet requête dans req.body
