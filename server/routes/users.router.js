@@ -1,14 +1,18 @@
-
-const express = require('express');
+const express = require("express");
 const usersRoutes = express.Router();
-const { authenticateUser } = require("../middleware/auth")
-const { getAllUsers, getOneUser } = require("../controllers/users")
-
+const { authenticateUser } = require("../middleware/auth");
+const {
+  getAllUsers,
+  getOneUser,
+  validatedRules,
+} = require("../controllers/users");
 
 //--Route GET qui renvoie toutes les utilisateur
-usersRoutes.get('/', authenticateUser, getAllUsers);
+usersRoutes.get("/", authenticateUser, getAllUsers);
 
 //--Route GET qui renvoie un utilisateur
-usersRoutes.get('/:id', authenticateUser, getOneUser);
+usersRoutes.get("/:id", authenticateUser, getOneUser);
 
-module.exports = {usersRoutes};
+usersRoutes.post("/:id", authenticateUser, validatedRules);
+
+module.exports = { usersRoutes };

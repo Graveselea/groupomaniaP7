@@ -1,12 +1,12 @@
-import {createGlobalStyle} from 'styled-components';
-import { useContext } from 'react'
-import { ThemeContext } from '../../utils/context/context'
+import { createGlobalStyle } from "styled-components";
+import { useContext } from "react";
+import { ThemeContext } from "../../utils/context/context";
 
 function GlobalStyle() {
-    const { theme } = useContext(ThemeContext)
-  
-    return <StyledGlobalStyle isDarkMode={theme === 'dark'} />
-  }
+  const { theme } = useContext(ThemeContext);
+
+  return <StyledGlobalStyle isDarkMode={theme === "dark"} />;
+}
 
 const StyledGlobalStyle = createGlobalStyle`
     * {
@@ -14,10 +14,9 @@ font-family: 'Lato', sans-serif;
 }
  
     body {
-        background-image: url("../../assets/fond.png");
-        background-color: ${({ isDarkMode }) => (isDarkMode ? 'black' : 'white')};
+        background-color: #FFD7D7;
         margin: 0;  
     }
-`
+`;
 
-export default GlobalStyle
+export default GlobalStyle;
