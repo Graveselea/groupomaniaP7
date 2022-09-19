@@ -6,6 +6,7 @@ import {
   UserIdContext,
   NameContext,
   RulesInContext,
+  isAdminInContext,
 } from "../../App";
 
 // eslint-disable-next-line import/no-anonymous-default-export
@@ -24,6 +25,7 @@ export default function Log() {
   let [userId, setUserId] = React.useContext(UserIdContext);
   let [name, setName] = React.useContext(NameContext);
   let [rules, setRules] = React.useContext(RulesInContext);
+  let [isAdmin, setIsAdmin] = React.useContext(isAdminInContext);
 
   useEffect(() => {
     setToken(undefined);
@@ -96,7 +98,7 @@ export default function Log() {
           setUserId(data.userId);
           setName(data.name);
           setRules(data.rules);
-          console.log(data.token);
+          setIsAdmin(data.isAdmin);
           console.log(data);
           localStorage.setItem("token", JSON.stringify(data.token));
           localStorage.setItem("userId", JSON.stringify(data.userId));
@@ -192,8 +194,8 @@ export default function Log() {
             confirmButtonText: "Ok",
           });
           navigate("/");
+          setAuthMode("signin");
         });
-      setAuthMode("signin");
     }
   };
 
@@ -249,13 +251,12 @@ export default function Log() {
   return (
     <div className="Auth-form-container">
       <form className="Auth-form" onSubmit={handleFormSignUp}>
-        <img src="../../assets/images/background.png" alt="login"></img>
         <div className="Auth-form-content">
-          <h3 className="Auth-form-title">Sign In</h3>
+          <h3 className="Auth-form-title">Sign Up</h3>
           <div className="text-center">
             Already registered?{" "}
             <span className="link-danger" onClick={changeAuthMode}>
-              Sign Up
+              Sign In
             </span>
           </div>
           <div className="form-group mt-3">

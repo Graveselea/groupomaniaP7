@@ -1,22 +1,29 @@
 import Card from "react-bootstrap/Card";
-import Comments from "../Comments/Comments";
 import * as Icon from "react-bootstrap-icons";
 import Modal from "react-bootstrap/Modal";
+import photoProfil from "../../assets/images/profile.png";
+
 import "./Post.css";
 import React, { useState, useRef } from "react";
-import { TokenContext, UserIdContext, NameContext } from "../../App";
+import {
+  TokenContext,
+  UserIdContext,
+  NameContext,
+  isAdminInContext,
+} from "../../App";
 
 const Post = (props) => {
   const Swal = require("sweetalert2");
   const { post, setPosts } = props.data;
   const { comments, setComments } = useState();
+
   let [token, setToken] = React.useContext(TokenContext);
   let [userId, setUserId] = React.useContext(UserIdContext);
   let [name, setName] = React.useContext(NameContext);
+  let [isAdmin, setIsAdmin] = React.useContext(isAdminInContext);
 
   const [modification, setModification] = useState(false);
   const [show, setShow] = useState(false);
-
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
 
@@ -285,7 +292,19 @@ const Post = (props) => {
       });
   };
 
-  return post.userId === userId ? (
+  // Get user data
+  const requestOptions = {
+    method: "GET",
+    headers: {
+      "Content-Type": "application/json",
+      Authorization: "Bearer " + token,
+    },
+  };
+  fetch("http://localhost:8000/users/" + userId, requestOptions).then(
+    (response) => response.json()
+  );
+
+  return post.userId === userId || isAdmin === true ? (
     modification ? (
       <>
         <Modal show={show} onHide={handleClose} animation={false}>
@@ -304,13 +323,13 @@ const Post = (props) => {
                     type="text"
                     className="displayTextAreaToModif"
                     ref={addTextAreaAndImage}
-                    placeholder="Modify your post"
+                    placeholder="HERE YOUR NEW TEXT !"
                   ></textarea>
                   <div className="displayButtons">
                     <input
                       id={post._id}
-                      className="styleButton fontSizeSend"
-                      type="submit"
+                      className="styleButtonfontSizeSend"
+                      type="SUBMIT"
                       name="POST"
                     ></input>
                     <input
@@ -322,7 +341,7 @@ const Post = (props) => {
                       id="image"
                     />
                     <button
-                      className="styleButton fontSizeAnnulation"
+                      className="styleButtonfontSizeAnnulation"
                       onClick={() => setModification(false)}
                     >
                       CANCEL
@@ -344,19 +363,15 @@ const Post = (props) => {
         >
           <Card.Header className="Card-header">
             <img
+              className="photoProfile"
               accept="image/*"
-              src="../../../assets/images/profile.webp"
+              src={photoProfil}
               alt="profil"
-              style={{ width: "80px", height: "80px" }}
             />
             <p className="dispayNamePoster">
               {post.name === name ? "Your post" : post.name}
             </p>
-            <p className="dispayNamePoster2">{`${new Date(
-              post.createdAt
-            ).toLocaleDateString("fr")} at ${new Date(
-              post.createdAt
-            ).toLocaleTimeString("fr")}`}</p>
+
             <Icon.Pencil
               className="iconPost"
               id={post._id}
@@ -372,6 +387,14 @@ const Post = (props) => {
             />
           </Card.Header>
           <Card.Body>
+            <div className="clock">
+              <Icon.Clock className="" />
+              <p className="dispayNamePoster2">{`${new Date(
+                post.createdAt
+              ).toLocaleDateString("fr")} at ${new Date(
+                post.createdAt
+              ).toLocaleTimeString("fr")}`}</p>
+            </div>
             <Card.Img
               src={post.imageUrl}
               alt=""
@@ -396,12 +419,33 @@ const Post = (props) => {
               </div>
             </div>
           </Card.Body>
-          <div className="display-comments" /* key={Math. rand() * 2} */>
+          <hr className="barre-comment"></hr>
+          <div className="display-comments">
+            <div className="display-new-comment">
+              <input
+                type="text"
+                id="text-new-comment"
+                placeholder="Ajouter un commentaire"
+                ref={addNewComment}
+                className="display-new-comment-input"
+              />
+              <button
+                className="display-new-comment-button"
+                id={"publish-new-commnent" + " " + `${post._id}`}
+                onClick={(e) => handlePostComment(e)}
+              >
+                Commenter
+              </button>
+            </div>
             {post.comments
               .map((comment, index) => (
                 <div key={index} className="display-comment">
                   <p className="dispay-avatar-commentator">
-                    <img src="" alt="Avatar du commenteur" />
+                    <img
+                      src={photoProfil}
+                      className="photoProfileComment"
+                      alt="Avatar "
+                    />
                   </p>
                   <div className="display-name-commentator-and-text">
                     <p className="name-commentator">{comment.name} :</p>
@@ -412,20 +456,6 @@ const Post = (props) => {
                 </div>
               ))
               .reverse()}
-            <div className="display-new-comment">
-              <input
-                type="text"
-                id="text-new-comment"
-                placeholder="Ajouter un commentaire"
-                ref={addNewComment}
-              />
-              <button
-                id={"publish-new-commnent" + " " + `${post._id}`}
-                onClick={(e) => handlePostComment(e)}
-              >
-                Commenter
-              </button>
-            </div>
           </div>
         </Card>
       </div>
@@ -433,20 +463,24 @@ const Post = (props) => {
   ) : (
     <div className="post">
       <Card className="Card" border="danger" style={{ width: "28rem" }}>
-        <Card.Header>
+        <Card.Header className="Card-header">
           <img
-            src="../../assets/images/profile.webp"
+            accept="image/*"
+            src={photoProfil}
+            className="photoProfile"
             alt="profil"
-            style={{ width: "80px", height: "80px" }}
           />
           <p className="dispayNamePoster">Publié par : {post.name}</p>
-          <p className="dispayNamePoster2">
-            {` ${new Date(post.createdAt).toLocaleDateString(
-              "fr"
-            )} at ${new Date(post.createdAt).toLocaleTimeString("fr")}`}
-          </p>
         </Card.Header>
         <Card.Body>
+          <div className="clock">
+            <Icon.Clock className="" />
+            <p className="dispayNamePoster2">{`${new Date(
+              post.createdAt
+            ).toLocaleDateString("fr")} at ${new Date(
+              post.createdAt
+            ).toLocaleTimeString("fr")}`}</p>
+          </div>
           <Card.Img
             src={post.imageUrl}
             alt=""
@@ -471,32 +505,41 @@ const Post = (props) => {
             </div>
           </div>
         </Card.Body>
-        {post.comments
-          .map((comment, index) => (
-            <div className="display-comment">
-              <p className="dispay-avatar-commentator">
-                <img src="" alt="Avatar du commenteur" />
-              </p>
-              <div className="display-name-commentator-and-text">
-                <p className="name-commentator">{comment.name} :</p>
-                <p className="display-commentator-text">{comment.comment}</p>
+        <hr className="barre-comment"></hr>
+        <div className="display-comments">
+          <div className="display-new-comment">
+            <input
+              type="text"
+              id="text-new-comment"
+              placeholder="Ajouter un commentaire"
+              ref={addNewComment}
+              className="display-new-comment-input"
+            />
+            <button
+              className="display-new-comment-button"
+              id={"publish-new-commnent" + " " + `${post._id}`}
+              onClick={(e) => handlePostComment(e)}
+            >
+              Commenter
+            </button>
+          </div>
+          {post.comments
+            .map((comment, index) => (
+              <div key={index} className="display-comment">
+                <p className="dispay-avatar-commentator">
+                  <img
+                    src={photoProfil}
+                    className="photoProfileComment"
+                    alt="Avatar "
+                  />{" "}
+                </p>
+                <div className="display-name-commentator-and-text">
+                  <p className="name-commentator">{comment.name} :</p>
+                  <p className="display-commentator-text">{comment.comment}</p>
+                </div>
               </div>
-            </div>
-          ))
-          .reverse()}
-        <div className="display-new-comment">
-          <input
-            type="text"
-            id="text-new-comment"
-            placeholder="Ajouter un commentaire"
-            ref={addNewComment}
-          />
-          <button
-            id={"publish-new-commnent" + " " + `${post._id}`}
-            onClick={(e) => handlePostComment(e)}
-          >
-            Commenter
-          </button>
+            ))
+            .reverse()}
         </div>
       </Card>
     </div>

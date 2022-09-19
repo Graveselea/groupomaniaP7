@@ -13,6 +13,7 @@ usersRoutes.get("/", authenticateUser, getAllUsers);
 //--Route GET qui renvoie un utilisateur
 usersRoutes.get("/:id", authenticateUser, getOneUser);
 
+//--Route POST qui pour la validation des règles
 usersRoutes.post("/:id", authenticateUser, validatedRules);
 
 module.exports = { usersRoutes };

@@ -48,6 +48,7 @@
   box-sizing: border-box;
   position: fixed;
   top: -100px;
+  z-index: 7;
 }
 
 .section-header {

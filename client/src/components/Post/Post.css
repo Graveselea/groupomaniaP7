@@ -7,6 +7,7 @@
   margin-top: 40px;
   padding: 0 10px;
   box-sizing: border-box;
+  z-index: 0;
 }
 
 .iconPost {
@@ -69,7 +70,155 @@
   margin-top: 40px;
   padding: 0 10px;
   box-sizing: border-box;
-  background-image: url("../../assets/images/background.png");
-  background-size: cover;
-  background-attachment: scroll;
+}
+
+.displayTextAreaToModif {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  margin-top: 0px;
+  margin-bottom: 40px;
+  padding: 10px;
+  box-sizing: border-box;
+  border-radius: 10px;
+}
+
+.styleButtonfontSizeSend {
+  cursor: pointer;
+  background-color: red;
+  color: #ffffff;
+  border-radius: 5px;
+  height: 40px;
+  width: 100px;
+  margin-right: 20px;
+}
+
+.styleButtonfontSizeAnnulation {
+  margin-top: 20px;
+  cursor: pointer;
+  background-color: red;
+  color: #ffffff;
+  border-radius: 5px;
+  height: 40px;
+  width: 100px;
+}
+
+.dispayNamePoster2 {
+  font-weight: bold;
+}
+
+.clock {
+  margin-top: auto;
+  margin-bottom: auto;
+  font-size: 14px;
+  font-style: italic;
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-end;
+  margin-right: 10px;
+}
+
+.clock p {
+  margin-top: auto;
+  margin-bottom: auto;
+}
+
+.display-comment {
+  display: flex;
+  flex-direction: row;
+  padding: 12px;
+  align-items: left;
+  justify-content: left;
+  width: 95%;
+  margin-top: 10px;
+  margin-left: 10px;
+  margin-bottom: 10px;
+  padding: 0 10px;
+  box-sizing: border-box;
+  background-color: #ffd7d7;
+  border-radius: 5px;
+}
+
+.display-commentator-text p {
+  display: flex;
+  flex-direction: column;
+  align-items: left;
+  justify-content: left;
+  width: 100%;
+  margin-top: 10px;
+  padding: 0 10px;
+  box-sizing: border-box;
+}
+
+.name-commentator {
+  font-weight: bold;
+  color: white;
+  text-transform: uppercase;
+}
+
+.likeOn {
+  color: green;
+  height: 25px;
+  width: auto;
+}
+
+.likeOff {
+  color: red;
+  height: 25px;
+  width: auto;
+}
+
+.likeOn:hover,
+.likeOff:hover {
+  cursor: pointer;
+  scale: 1.2;
+}
+
+.display-new-comment {
+  display: flex;
+  flex-direction: row;
+  padding: 12px;
+  align-items: left;
+  justify-content: left;
+  width: 95%;
+  margin-top: 10px;
+
+  margin-bottom: 10px;
+  padding: 10px 10px;
+  box-sizing: border-box;
+  border-radius: 15px;
+}
+
+.barre-comment {
+  border: 2px solid #ffd7d7;
+}
+
+.display-new-comment-input {
+  display: flex;
+  flex-direction: row;
+  padding: 12px;
+  align-items: left;
+  justify-content: left;
+  width: 100%;
+  margin-right: 5px;
+  padding: 0 10px;
+  box-sizing: border-box;
+  border-radius: 5px;
+}
+
+.photoProfile {
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  margin: 10px;
+}
+
+.photoProfileComment {
+  width: 30px;
+  height: 30px;
+  opacity: 0.6;
+  border-radius: 50%;
+  margin: 5px;
 }

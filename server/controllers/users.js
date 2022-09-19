@@ -76,11 +76,12 @@ function login(req, res, next) {
           if (!valid) {
             return res.status(401).json({ error: "Mot de passe incorrect !" });
           }
-          //--Si l'email et le mot de passe son OK, on renvoit au frontend ce qu'il attend > L'userId, le name et le token
+          //--Si l'email et le mot de passe son OK, on renvoit au frontend ce qu'il attend > L'userId, le name, les règles validées, le rôle et le token
           res.status(200).json({
             userId: user._id,
             name: user.name,
             rules: user.isRuleValidated,
+            isAdmin: user.isAdmin,
             //--Création du token
             token: jwt.sign(
               //--Pour la fonction sign
@@ -113,10 +114,14 @@ function getOneUser(req, res, next) {
 }
 
 function validatedRules(req, res, next) {
-  User.updateOne({ _id: req.params.id }, { isRuleValidated: true })
+  User.findByIdAndUpdate(
+    { _id: req.params.id },
+    { $set: { isRuleValidated: true } }
+  )
     .then(() => res.status(200).json({ message: "Règles validées" }))
     .catch((error) => res.status(400).json({ error }));
 }
+
 module.exports = {
   signup,
   login,
