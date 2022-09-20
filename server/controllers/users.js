@@ -114,7 +114,7 @@ function getOneUser(req, res, next) {
 }
 
 function validatedRules(req, res, next) {
-  User.findByIdAndUpdate(
+  User.findOneAndUpdate(
     { _id: req.params.id },
     { $set: { isRuleValidated: true } }
   )

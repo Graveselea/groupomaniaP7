@@ -145,13 +145,15 @@ function likePost(req, res, next) {
 
 function commentPost(req, res, next) {
   //--On retrouve le post dans la base de données
-  Post.findById().then((post) => {
+  Post.findOne({ _id: req.params.id }).then((post) => {
     //-- On envoit le commentaire dans le post
     const comment = {
       userId: req.auth.userId,
       comment: req.body.comment,
+
       name: req.body.name,
     };
+    console.log(comment);
     Post.updateOne(
       { _id: req.params.id },
       {

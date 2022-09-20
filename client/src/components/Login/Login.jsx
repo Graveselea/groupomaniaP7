@@ -99,9 +99,7 @@ export default function Log() {
           setName(data.name);
           setRules(data.rules);
           setIsAdmin(data.isAdmin);
-          console.log(data);
           localStorage.setItem("token", JSON.stringify(data.token));
-          localStorage.setItem("userId", JSON.stringify(data.userId));
           localStorage.setItem("name", JSON.stringify(data.name));
           localStorage.setItem("rules", JSON.stringify(data.rules));
           if (data.userId === undefined) {
@@ -126,6 +124,7 @@ export default function Log() {
         });
     }
   };
+
   //SignUp
   const inputsSignUp = useRef([]);
   const addInputsSignUp = (el) => {

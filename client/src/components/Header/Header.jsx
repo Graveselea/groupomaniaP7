@@ -1,6 +1,5 @@
 import { useNavigate } from "react-router-dom";
-import styled from "styled-components";
-import colors from "../../utils/style/colors";
+
 import { useContext } from "react";
 import logowhite from "../../assets/images/logowhite.png";
 import "./Header.css";

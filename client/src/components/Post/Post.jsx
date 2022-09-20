@@ -61,10 +61,7 @@ const Post = (props) => {
               Authorization: "Bearer " + token,
             },
           };
-          const newArrayPosts = fetch(
-            "http://localhost:8000/posts",
-            requestOptions
-          )
+          fetch("http://localhost:8000/posts", requestOptions)
             .then((response) => response.json())
             .then((data) => {
               const posts = data;
@@ -134,7 +131,6 @@ const Post = (props) => {
   const handleDelete = async (event) => {
     event.preventDefault();
     let target = event.target.id;
-    console.log(target);
     const requestOptionsDelete = {
       method: "DELETE",
       headers: { Authorization: "Bearer " + token },
@@ -240,13 +236,13 @@ const Post = (props) => {
   const newComment = useRef([]);
   const addNewComment = (el) => {
     newComment.current.push(el);
+    document.getElementById("text-new-comment").value = "";
   };
 
   const handlePostComment = async (e) => {
     e.preventDefault();
-    let postId = post._id;
-    console.log(postId);
-    let comment = document.getElementById("text-new-comment").value;
+    const postId = post._id;
+    const comment = newComment.current[0].value;
     const requestOptionsNewComment = {
       method: "POST",
       headers: {
@@ -273,16 +269,13 @@ const Post = (props) => {
             Authorization: "Bearer " + token,
           },
         };
-        const newArrayComments = fetch(
+        fetch(
           "http://localhost:8000/posts/" + postId + "/comments",
           requestOptions
         )
           .then((response) => response.json())
           .then((data) => {
-            const newArrayPosts = fetch(
-              "http://localhost:8000/posts",
-              requestOptions
-            )
+            fetch("http://localhost:8000/posts", requestOptions)
               .then((response) => response.json())
               .then((data) => {
                 const posts = data;
@@ -293,16 +286,16 @@ const Post = (props) => {
   };
 
   // Get user data
-  const requestOptions = {
-    method: "GET",
-    headers: {
-      "Content-Type": "application/json",
-      Authorization: "Bearer " + token,
-    },
-  };
-  fetch("http://localhost:8000/users/" + userId, requestOptions).then(
-    (response) => response.json()
-  );
+  // const requestOptions = {
+  //   method: "GET",
+  //   headers: {
+  //     "Content-Type": "application/json",
+  //     Authorization: "Bearer " + token,
+  //   },
+  // };
+  // fetch("http://localhost:8000/users/" + userId, requestOptions).then(
+  //   (response) => response.json()
+  // );
 
   return post.userId === userId || isAdmin === true ? (
     modification ? (
@@ -426,13 +419,15 @@ const Post = (props) => {
                 type="text"
                 id="text-new-comment"
                 placeholder="Ajouter un commentaire"
-                ref={addNewComment}
+                ref={addNewComment} // refattribut permet de stocker une référence à un élément ou composant React particulier renvoyé par la render()
                 className="display-new-comment-input"
               />
               <button
                 className="display-new-comment-button"
                 id={"publish-new-commnent" + " " + `${post._id}`}
-                onClick={(e) => handlePostComment(e)}
+                onClick={(e) => {
+                  handlePostComment(e);
+                }}
               >
                 Commenter
               </button>
@@ -518,7 +513,9 @@ const Post = (props) => {
             <button
               className="display-new-comment-button"
               id={"publish-new-commnent" + " " + `${post._id}`}
-              onClick={(e) => handlePostComment(e)}
+              onClick={(e) => {
+                handlePostComment(e);
+              }}
             >
               Commenter
             </button>

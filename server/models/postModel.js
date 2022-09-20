@@ -18,7 +18,7 @@ const postSchema = mongoose.Schema(
     imageUrl: { type: String, required: false }, //-- l'URL de l'image à téléchargée par l'utilisateur
     time: { type: Number, required: false }, //-- Time
     likes: { type: Number, required: false, default: 0 }, //-- nombre d'utilisateurs qui aiment (= likent) le post
-    comments: [commentsSchema],
+    comments: { type: [commentsSchema], required: false }, //-- tableau contenant les commentaires
     usersLiked: { type: [String], required: false }, //-- tableau des identifiants des utilisateurs qui ont aimé (= liked) le post
   },
   {
