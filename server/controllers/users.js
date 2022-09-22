@@ -9,7 +9,7 @@ function signup(req, res, next) {
   //--Vérification du format du nom
   if (/^([a-zA-Z0-9-_]{2,36})$/g.test(req.body.name)) {
     //--Vérification du format de l'email
-    if (/^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/g.test(req.body.email)) {
+    if (/^[\w-.]+@([\w-]+\.)+[\w-]{2,4}$/g.test(req.body.email)) {
       //--Vérification de la qualité du mot de passe
       if (
         /^(?=.{10,}$)(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*\W).*$/g.test(

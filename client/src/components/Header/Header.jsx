@@ -1,6 +1,6 @@
 import { useNavigate } from "react-router-dom";
 
-import { useContext } from "react";
+import React, { useContext } from "react";
 import logowhite from "../../assets/images/logowhite.webp";
 import "./Header.css";
 import Button from "react-bootstrap/Button";

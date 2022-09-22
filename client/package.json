@@ -19,7 +19,7 @@
     "react-hook-form": "^7.34.2",
     "react-login": "^0.1.0",
     "react-router-dom": "^6.3.0",
-    "react-scripts": "^5.0.1",
+    "react-scripts": "^2.1.3",
     "start": "^5.1.0",
     "styled-components": "^5.3.5",
     "sweetalert2": "^11.4.29",

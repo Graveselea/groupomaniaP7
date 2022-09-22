@@ -8,9 +8,6 @@ import {
   RulesInContext,
   UserIdContext,
 } from "../../CreateContext";
-import Button from "react-bootstrap/Button";
-import Form from "react-bootstrap/Form";
-import InputGroup from "react-bootstrap/InputGroup";
 import "./Posts.css";
 import Swal from "sweetalert2";
 import Loader from "../../utils/style/Atoms";
@@ -84,14 +81,7 @@ export default function Posts() {
             confirmButtonText: "Let's go !",
           });
         }
-        // if (posts.length === 0) {
-        //   SwalWelcome.fire({
-        //     text: "Vous n'avez pas encore de post, créez-en un !",
-        //     icon: "info",
-        //     confirmButtonText: "Ok",
-        //   });
-        // }
-        setIsLoading(false);
+        // setIsLoading(false);
       });
   }, []); // Ne s'affiche qu'une fois
 
@@ -113,7 +103,7 @@ export default function Posts() {
     };
 
     if (form[0].value === "" && form[1].files[0] === undefined) {
-      Swal.fire("Vous avez oublié de saisir un texte et/ou un image");
+      await Swal.fire("Vous avez oublié de saisir un texte et/ou un image");
     } else if (form[0].value === "" && form[1].files[0] !== undefined) {
       formData.append("image", form[1].files[0]);
       formData.append("post", "Aucun texte saisie");

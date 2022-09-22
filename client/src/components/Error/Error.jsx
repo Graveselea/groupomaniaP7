@@ -1,13 +1,12 @@
-import './Error.css'
+import React from "react";
+import "./Error.css";
 
-import React, { Component } from "react";
-
-class Error extends Component {
-    render() {
-        return (
-            <h1>Page non trouvée</h1>
-        );
-    }
+function Error() {
+  return (
+    <div className="error">
+      <h1>Erreur 404</h1>
+      <p>La page que vous recherchez n'existe pas</p>
+    </div>
+  );
 }
-
-export default Error
+export default Error;

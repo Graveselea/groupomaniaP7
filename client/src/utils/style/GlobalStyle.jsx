@@ -1,6 +1,6 @@
 import { createGlobalStyle } from "styled-components";
-import { useContext } from "react";
-import { ThemeContext } from "../../utils/context/context";
+import React, { useContext } from "react";
+import { ThemeContext } from "../context/context";
 
 function GlobalStyle() {
   const { theme } = useContext(ThemeContext);

@@ -16,6 +16,7 @@ async function authenticateUser(req, res, next) {
     //--On vérifie que l'userId de la requête correspond à celui du token
     if (req.body.userId && req.body.userId !== userId) {
       //--S'ils sont différents
+      // noinspection ExceptionCaughtLocallyJS
       throw "ID utilisateur non valable !";
       //--S'ils sont identiques
     } else {

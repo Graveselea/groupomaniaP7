@@ -46,7 +46,7 @@ function App() {
                         path="/Rules"
                         element={<Rules />}
                       ></Route>
-                      {/* <Route path="*" component={<Error />}></Route> */}
+                      <Route path="/*" component={<Error />}></Route>
                     </Routes>
                   </ThemeProvider>
                 </RulesInContext.Provider>
