@@ -2,7 +2,7 @@ import { useNavigate } from "react-router-dom";
 
 import React, { useContext } from "react";
 import logowhite from "../../assets/images/logowhite.webp";
-import "./Header.scss";
+import "./Header.css";
 import { TokenContext, UserIdContext, NameContext } from "../../CreateContext";
 
 import * as Icon from "react-bootstrap-icons";

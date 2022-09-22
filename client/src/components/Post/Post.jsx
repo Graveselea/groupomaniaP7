@@ -3,7 +3,7 @@ import * as Icon from "react-bootstrap-icons";
 import Modal from "react-bootstrap/Modal";
 import photoProfil from "../../assets/images/profile.webp";
 
-import "./Post.scss";
+import "./Post.css";
 import React, { useState, useRef } from "react";
 import {
   TokenContext,
@@ -36,7 +36,6 @@ const Post = (props) => {
   const sendModification = (event) => {
     event.preventDefault();
     const form = event.target;
-    console.log(form);
     const postId = form[1].id;
     const formData = new FormData();
     const requestOptionsModifiyPost = {

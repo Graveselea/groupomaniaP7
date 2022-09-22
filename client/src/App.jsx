@@ -17,8 +17,6 @@ import {
   isAdminInContext,
 } from "./CreateContext";
 
-import "../src/styles/css/sass/style.scss";
-
 function App() {
   const [token, setToken] = React.useState();
   const [userId, setUserId] = React.useState();

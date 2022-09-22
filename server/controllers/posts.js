@@ -153,7 +153,6 @@ function commentPost(req, res, next) {
 
       name: req.body.name,
     };
-    console.log(comment);
     Post.updateOne(
       { _id: req.params.id },
       {

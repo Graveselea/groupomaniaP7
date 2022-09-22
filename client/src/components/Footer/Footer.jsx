@@ -1,7 +1,7 @@
 import { useNavigate } from "react-router-dom";
 
 import React, { useContext } from "react";
-import "./Footer.scss";
+import "./Footer.css";
 import { TokenContext, UserIdContext, NameContext } from "../../CreateContext";
 
 import * as Icon from "react-bootstrap-icons";

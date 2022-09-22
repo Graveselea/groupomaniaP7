@@ -1,6 +1,6 @@
 import React from "react";
 import Card from "react-bootstrap/Card";
-import "./Rules.scss";
+import "./Rules.css";
 function Rules() {
   return (
     <div>

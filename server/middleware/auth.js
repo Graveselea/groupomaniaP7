@@ -6,8 +6,7 @@ async function authenticateUser(req, res, next) {
     //--Récupération du token dans le header de la requête
     const token = req.headers.authorization.split(" ")[1]; //--Split permet de générer un tableau avec deux éléments dont le 1er est le mot bearer (ce mot se place automatiquement devant le token) et le deuxième le token
     //--Décoder le token
-    const decodedToken = jwt.verify(token, process.env.SECRET);
-    console.log(token); //--'RANDOM_TOKEN_SECRET' est la clé secrète
+    const decodedToken = jwt.verify(token, process.env.SECRET); //--'SECRET' est la clé secrète
     //--Une fois le token décodé, il devient un objet javaScript classqiue
     //--On récupère l'userId qui est dedans
     const userId = decodedToken.userId;

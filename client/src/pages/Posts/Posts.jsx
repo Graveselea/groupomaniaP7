@@ -8,7 +8,7 @@ import {
   RulesInContext,
   UserIdContext,
 } from "../../CreateContext";
-import "./Posts.scss";
+import "./Posts.css";
 import Swal from "sweetalert2";
 import Loader from "../../utils/style/Atoms";
 
