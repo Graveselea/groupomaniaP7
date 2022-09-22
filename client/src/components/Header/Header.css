@@ -1,14 +1,15 @@
 .gpm-banner-logo {
   width: 300px;
+  height: auto;
   margin-left: 20px;
   margin-right: 50px;
 }
 
 .button-header {
   margin-left: 40px;
-  background-color: white;
-  border: 1px solid white;
+  background: white;
   border-radius: 5px;
+  border: 1px solid white;
   color: #000000;
   font-size: 1.2em;
   font-weight: bold;
@@ -18,6 +19,16 @@
   transition: all 0.3s ease 0s;
 }
 
+.button-header:hover {
+  background: #ffd7d7;
+  color: #ffffff;
+  border: 1px solid #ffd7d7;
+  cursor: pointer;
+}
+.link-header {
+  color: #000000;
+  text-decoration: none;
+}
 .XCircle {
   cursor: pointer;
   margin-left: 40px;
@@ -38,6 +49,12 @@
   width: 60px;
 }
 
+.cardchecklist:hover {
+  background-color: #ffd7d7;
+  color: #ffffff;
+  border: 1px solid #ffd7d7;
+  cursor: pointer;
+}
 .header {
   display: flex;
   flex-direction: row;
@@ -63,4 +80,27 @@
   height: 110px;
   background: #fd2d01;
   background-position: fixed;
+}
+
+@media (max-width: 900px) {
+  .section-header {
+    height: 180px;
+    display: flex;
+    flex-direction: column;
+  }
+  .gpm-banner-logo img {
+    width: 20%;
+  }
+  .gpm-banner-logo {
+    margin-left: 0;
+    margin-right: 0;
+  }
+
+  .button-header,
+  .cardchecklist,
+  .XCircle {
+    margin-left: 10px;
+    margin-top: 10px;
+    display: block;
+  }
 }

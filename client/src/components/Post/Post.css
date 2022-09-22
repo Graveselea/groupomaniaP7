@@ -9,7 +9,9 @@
   box-sizing: border-box;
   z-index: 0;
 }
-
+.Card {
+  box-shadow: 10px 10px 20px rgba(255, 0, 0, 0.659);
+}
 .iconPost {
   width: 20px;
   height: 20px;
@@ -221,4 +223,45 @@
   opacity: 0.6;
   border-radius: 50%;
   margin: 5px;
+}
+
+@media (max-width: 980px) {
+  .displayPost {
+    margin-top: 0px;
+  }
+
+  .displayTextAreaToModif {
+    margin-bottom: 0px;
+  }
+
+  .display-new-comment {
+    margin-top: 0px;
+  }
+
+  .display-new-comment-input {
+    margin-right: 0px;
+  }
+
+  .display-comment {
+    margin-top: 0px;
+  }
+
+  .display-commentator-text {
+    margin-top: 0px;
+  }
+
+  .display-commentator-text p {
+    margin-top: 0px;
+  }
+
+  .display-commentator-text {
+    margin-top: 0px;
+  }
+
+  .post {
+    margin-top: 0px;
+    width: auto;
+    margin-right: 20px;
+    margin-left: 20px;
+  }
 }

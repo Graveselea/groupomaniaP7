@@ -1,5 +1,4 @@
 import React from "react";
-import { createRoot } from "react-dom/client";
 import GlobalStyle from "./utils/style/GlobalStyle";
 import { ThemeProvider } from "./utils/context/context";
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
@@ -9,14 +8,13 @@ import Header from "./components/Header/Header";
 import Error from "./components/Error/Error";
 import Rules from "./components/Rules/Rules";
 import "bootstrap/dist/css/bootstrap.min.css";
-import { Navigate } from "react-router-dom";
-
-export const TokenContext = React.createContext();
-export const UserIdContext = React.createContext();
-export const NameContext = React.createContext();
-export const LogInContext = React.createContext();
-export const RulesInContext = React.createContext();
-export const isAdminInContext = React.createContext();
+import {
+  TokenContext,
+  UserIdContext,
+  NameContext,
+  RulesInContext,
+  isAdminInContext,
+} from "./CreateContext";
 
 function App() {
   const [token, setToken] = React.useState();
@@ -38,9 +36,17 @@ function App() {
                     <Header />
                     <Routes>
                       <Route exact path="/" element={<Home />}></Route>
-                      <Route path="/Posts/" element={<Posts />}></Route>
-                      <Route path="/Rules/" element={<Rules />}></Route>
-                      <Route component={<Error />}></Route>
+                      <Route
+                        name="Posts"
+                        path="/Posts"
+                        element={<Posts />}
+                      ></Route>
+                      <Route
+                        name="Rules"
+                        path="/Rules"
+                        element={<Rules />}
+                      ></Route>
+                      {/* <Route path="*" component={<Error />}></Route> */}
                     </Routes>
                   </ThemeProvider>
                 </RulesInContext.Provider>

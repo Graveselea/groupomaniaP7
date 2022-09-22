@@ -1,10 +1,10 @@
 import { useNavigate } from "react-router-dom";
 
 import { useContext } from "react";
-import logowhite from "../../assets/images/logowhite.png";
+import logowhite from "../../assets/images/logowhite.webp";
 import "./Header.css";
 import Button from "react-bootstrap/Button";
-import { TokenContext, UserIdContext, NameContext } from "../../App";
+import { TokenContext, UserIdContext, NameContext } from "../../CreateContext";
 
 import * as Icon from "react-bootstrap-icons";
 
@@ -39,12 +39,16 @@ function Header() {
   return (
     <section className="section-header">
       <div className="header">
-        <nav>
-          <img src={logowhite} alt="logo" className="gpm-banner-logo" />
+        <nav className="nav-item">
+          <img
+            src={logowhite}
+            alt="logo-groupomania"
+            className="gpm-banner-logo"
+          />
           {token === undefined && userId === "" ? (
             ""
           ) : (
-            <a href="http://localhost:3000/">
+            <a href="http://localhost:3000/" className="link-header">
               <Button className="button-header" variant="red" to="/">
                 Home
               </Button>
@@ -53,7 +57,7 @@ function Header() {
           {token === undefined && userId === "" ? (
             ""
           ) : (
-            <a href="http://localhost:3000/posts">
+            <a href="http://localhost:3000/posts" className="link-header">
               <Button className="button-header" variant="red" to="/posts">
                 Posts
               </Button>

@@ -1,7 +1,7 @@
 import Card from "react-bootstrap/Card";
 import * as Icon from "react-bootstrap-icons";
 import Modal from "react-bootstrap/Modal";
-import photoProfil from "../../assets/images/profile.png";
+import photoProfil from "../../assets/images/profile.webp";
 
 import "./Post.css";
 import React, { useState, useRef } from "react";
@@ -10,12 +10,11 @@ import {
   UserIdContext,
   NameContext,
   isAdminInContext,
-} from "../../App";
+} from "../../CreateContext";
 
 const Post = (props) => {
   const Swal = require("sweetalert2");
   const { post, setPosts } = props.data;
-  const { comments, setComments } = useState();
 
   let [token, setToken] = React.useContext(TokenContext);
   let [userId, setUserId] = React.useContext(UserIdContext);
@@ -145,10 +144,7 @@ const Post = (props) => {
             Authorization: "Bearer " + token,
           },
         };
-        const newArrayPosts = fetch(
-          "http://localhost:8000/posts",
-          requestOptions
-        )
+        fetch("http://localhost:8000/posts", requestOptions)
           .then((response) => response.json())
           .then((data) => {
             const posts = data;
@@ -160,7 +156,6 @@ const Post = (props) => {
   //Like
   const handleLike = async (event) => {
     let postId = event;
-
     const arrayUsersLiked = post.usersLiked;
     const requestOptions = {
       method: "GET",
@@ -190,10 +185,7 @@ const Post = (props) => {
       )
         .then((response) => response.json())
         .then((data) => {
-          const newArrayPosts = fetch(
-            "http://localhost:8000/posts",
-            requestOptions
-          )
+          fetch("http://localhost:8000/posts", requestOptions)
             .then((response) => response.json())
             .then((data) => {
               const posts = data;
@@ -220,10 +212,7 @@ const Post = (props) => {
       )
         .then((response) => response.json())
         .then((data) => {
-          const newArrayPosts = fetch(
-            "http://localhost:8000/posts",
-            requestOptions
-          )
+          fetch("http://localhost:8000/posts", requestOptions)
             .then((response) => response.json())
             .then((data) => {
               const posts = data;

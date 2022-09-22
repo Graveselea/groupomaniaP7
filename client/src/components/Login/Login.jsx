@@ -7,7 +7,7 @@ import {
   NameContext,
   RulesInContext,
   isAdminInContext,
-} from "../../App";
+} from "../../CreateContext";
 
 // eslint-disable-next-line import/no-anonymous-default-export
 export default function Log() {
@@ -30,6 +30,8 @@ export default function Log() {
   useEffect(() => {
     setToken(undefined);
     setUserId("");
+    setName("");
+    setRules("");
   }, []);
 
   const errors = {
@@ -101,7 +103,6 @@ export default function Log() {
           setIsAdmin(data.isAdmin);
           localStorage.setItem("token", JSON.stringify(data.token));
           localStorage.setItem("name", JSON.stringify(data.name));
-          localStorage.setItem("rules", JSON.stringify(data.rules));
           if (data.userId === undefined) {
             SwalWelcome.fire({
               title: "",

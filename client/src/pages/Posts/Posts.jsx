@@ -7,7 +7,7 @@ import {
   NameContext,
   RulesInContext,
   UserIdContext,
-} from "../../App";
+} from "../../CreateContext";
 import Button from "react-bootstrap/Button";
 import Form from "react-bootstrap/Form";
 import InputGroup from "react-bootstrap/InputGroup";
@@ -18,9 +18,9 @@ import Loader from "../../utils/style/Atoms";
 export default function Posts() {
   const SwalWelcome = require("sweetalert2");
 
-  let [token, setToken] = React.useContext(TokenContext);
-  let [name, setName] = React.useContext(NameContext);
-  const [userId, setUserId] = React.useContext(UserIdContext);
+  let [token] = React.useContext(TokenContext);
+  let [name] = React.useContext(NameContext);
+  const [userId] = React.useContext(UserIdContext);
   const [isLoading, setIsLoading] = useState(true);
   const [posts, setPosts] = useState(null);
   const [rules, setRules] = React.useContext(RulesInContext);
@@ -60,6 +60,7 @@ export default function Posts() {
       .then((data) => {
         const posts = data;
         setPosts(posts);
+
         if (rules === false) {
           SwalWelcome.fire({
             title: `Bonjour ${name} !`,
@@ -74,6 +75,7 @@ export default function Posts() {
             }
           });
         }
+
         if (rules === true) {
           SwalWelcome.fire({
             title: `Bonjour ${name} !`,
@@ -82,9 +84,16 @@ export default function Posts() {
             confirmButtonText: "Let's go !",
           });
         }
+        // if (posts.length === 0) {
+        //   SwalWelcome.fire({
+        //     text: "Vous n'avez pas encore de post, créez-en un !",
+        //     icon: "info",
+        //     confirmButtonText: "Ok",
+        //   });
+        // }
         setIsLoading(false);
       });
-  }, []);
+  }, []); // Ne s'affiche qu'une fois
 
   //Création d'un post */
 
@@ -145,7 +154,7 @@ export default function Posts() {
               Authorization: "Bearer " + token,
             },
           };
-          const newPostsWall = fetch("http://localhost:8000/posts", reqOptions)
+          fetch("http://localhost:8000/posts", reqOptions)
             .then((response) => response.json())
             .then((data) => {
               const posts = data;
@@ -170,7 +179,7 @@ export default function Posts() {
               Authorization: "Bearer " + token,
             },
           };
-          const newPostsWall = fetch("http://localhost:8000/posts", reqOptions)
+          fetch("http://localhost:8000/posts", reqOptions)
             .then((response) => response.json())
             .then((data) => {
               const posts = data;
@@ -225,13 +234,18 @@ export default function Posts() {
           </div>
         </form>
       </div>
-
       <hr></hr>
-      <div className="displayPosts">
-        {posts.map((post, index) => (
-          <Post key={index} data={{ post, setPosts }} />
-        ))}
-      </div>
+      {posts.length === 0 ? (
+        <div className="displayNoPost">
+          <h2 className="noPost">There are no posts yet. Write one!</h2>
+        </div>
+      ) : (
+        <div className="displayPosts">
+          {posts.map((post, index) => (
+            <Post key={index} data={{ post, setPosts }} />
+          ))}
+        </div>
+      )}
     </section>
   );
 }
