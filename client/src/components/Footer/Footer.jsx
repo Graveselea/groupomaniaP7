@@ -1,13 +1,12 @@
 import { useNavigate } from "react-router-dom";
 
 import React, { useContext } from "react";
-import logowhite from "../../assets/images/logowhite.webp";
-import "./Header.scss";
+import "./Footer.scss";
 import { TokenContext, UserIdContext, NameContext } from "../../CreateContext";
 
 import * as Icon from "react-bootstrap-icons";
 
-function Header() {
+function Footer() {
   let [token, setToken] = useContext(TokenContext);
   let [userId, setUserId] = useContext(UserIdContext);
   let [name, setName] = useContext(NameContext);
@@ -39,19 +38,14 @@ function Header() {
   };
 
   return (
-    <section className="section-header">
-      <div className="header">
-        <img
-          src={logowhite}
-          alt="logo-groupomania"
-          className="gpm-banner-logo"
-        />{" "}
-        <nav className="nav-item">
+    <section className="section-footer">
+      <div className="footer">
+        <nav className="navFooter">
           {token === undefined && userId === "" ? (
             ""
           ) : (
             <Icon.House
-              className="cardchecklist"
+              className="Rules-Footer"
               onClick={posts}
               height="100%"
               width="100%"
@@ -61,7 +55,7 @@ function Header() {
             ""
           ) : (
             <Icon.CardChecklist
-              className="cardchecklist"
+              className="Rules-Footer"
               onClick={rules}
               height="100%"
               width="100%"
@@ -72,7 +66,7 @@ function Header() {
             ""
           ) : (
             <Icon.BoxArrowRight
-              className="XCircle"
+              className="logout-Footer"
               onClick={logout}
               height="100%"
               width="100%"
@@ -84,4 +78,4 @@ function Header() {
   );
 }
 
-export default Header;
+export default Footer;

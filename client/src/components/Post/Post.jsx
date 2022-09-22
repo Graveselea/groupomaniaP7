@@ -3,7 +3,7 @@ import * as Icon from "react-bootstrap-icons";
 import Modal from "react-bootstrap/Modal";
 import photoProfil from "../../assets/images/profile.webp";
 
-import "./Post.css";
+import "./Post.scss";
 import React, { useState, useRef } from "react";
 import {
   TokenContext,

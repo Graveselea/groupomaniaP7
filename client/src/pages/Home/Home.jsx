@@ -1,5 +1,5 @@
 import React from "react";
-import "./Home.css";
+import "./Home.scss";
 import Login from "../../components/Login/Login";
 import "bootstrap/dist/css/bootstrap.min.css";
 

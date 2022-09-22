@@ -5,6 +5,7 @@ import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 import Posts from "./pages/Posts/Posts";
 import Home from "./pages/Home/Home";
 import Header from "./components/Header/Header";
+import Footer from "./components/Footer/Footer";
 import Error from "./components/Error/Error";
 import Rules from "./components/Rules/Rules";
 import "bootstrap/dist/css/bootstrap.min.css";
@@ -15,6 +16,8 @@ import {
   RulesInContext,
   isAdminInContext,
 } from "./CreateContext";
+
+import "../src/styles/css/sass/style.scss";
 
 function App() {
   const [token, setToken] = React.useState();
@@ -46,8 +49,9 @@ function App() {
                         path="/Rules"
                         element={<Rules />}
                       ></Route>
-                      <Route path="/*" component={<Error />}></Route>
+                      <Route path="/*" element={<Error />}></Route>
                     </Routes>
+                    <Footer />
                   </ThemeProvider>
                 </RulesInContext.Provider>
               </isAdminInContext.Provider>
