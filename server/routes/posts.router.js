@@ -13,7 +13,7 @@ const {
 } = require("../controllers/posts");
 
 // Middleware
-const { imageUpload } = require("../middleware/multer");
+const multer = require("../middleware/multer");
 const { authenticateUser } = require("../middleware/auth");
 
 const postsRouter = express.Router(); // appel express.Router()
@@ -21,8 +21,8 @@ const bodyParser = require("body-parser");
 
 postsRouter.use(bodyParser.json());
 
-postsRouter.post("/", authenticateUser, imageUpload, createPost); // création d'un post
-postsRouter.put("/:id", authenticateUser, imageUpload, modifyPost); // modification d'un post
+postsRouter.post("/", authenticateUser, multer, createPost); // création d'un post
+postsRouter.put("/:id", authenticateUser, multer, modifyPost); // modification d'un post
 postsRouter.delete("/:id", authenticateUser, deletePost); // :id = (deux points) variable
 postsRouter.get("/:id", authenticateUser, getOnePost); // :id = (deux points) variable
 postsRouter.get("/", authenticateUser, getAllPosts); // affichage posts

@@ -8,6 +8,7 @@
 .XCircle {
   cursor: pointer;
   margin-left: 40px;
+  margin-right: 25px;
   background-color: #000000;
   color: #ffffff;
   border-radius: 5px;
@@ -53,7 +54,8 @@
   flex-direction: row;
   justify-content: space-between;
   height: 110px;
-  background: #fd2d01;
+  background: #fd2b01db;
+  z-index: 5;
   background-position: fixed;
 }
 

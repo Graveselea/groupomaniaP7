@@ -21,6 +21,10 @@ const Post = (props) => {
   let [name, setName] = React.useContext(NameContext);
   let [isAdmin, setIsAdmin] = React.useContext(isAdminInContext);
 
+  // persistance si REFRESH page
+  const tokenConnected = JSON.parse(localStorage.getItem("token"));
+  const nameConnected = JSON.parse(localStorage.getItem("name"));
+
   const [modification, setModification] = useState(false);
   const [show, setShow] = useState(false);
   const handleClose = () => setShow(false);
@@ -40,7 +44,7 @@ const Post = (props) => {
     const formData = new FormData();
     const requestOptionsModifiyPost = {
       method: "PUT",
-      headers: { Authorization: "Bearer " + token },
+      headers: { Authorization: `Bearer ${tokenConnected}` },
       body: formData,
     };
 
@@ -56,7 +60,7 @@ const Post = (props) => {
             method: "GET",
             headers: {
               "Content-Type": "application/json",
-              Authorization: "Bearer " + token,
+              Authorization: `Bearer ${tokenConnected}`,
             },
           };
           fetch("http://localhost:8000/posts", requestOptions)
@@ -79,13 +83,10 @@ const Post = (props) => {
             method: "GET",
             headers: {
               "Content-Type": "application/json",
-              Authorization: "Bearer " + token,
+              Authorization: `Bearer ${tokenConnected}`,
             },
           };
-          const newArrayPosts = fetch(
-            "http://localhost:8000/posts",
-            requestOptions
-          )
+          fetch("http://localhost:8000/posts", requestOptions)
             .then((response) => response.json())
             .then((data) => {
               const posts = data;
@@ -106,13 +107,10 @@ const Post = (props) => {
             method: "GET",
             headers: {
               "Content-Type": "application/json",
-              Authorization: "Bearer " + token,
+              Authorization: `Bearer ${tokenConnected}`,
             },
           };
-          const newArrayPosts = fetch(
-            "http://localhost:8000/posts",
-            requestOptions
-          )
+          fetch("http://localhost:8000/posts", requestOptions)
             .then((response) => response.json())
             .then((data) => {
               const posts = data;
@@ -131,7 +129,7 @@ const Post = (props) => {
     let target = event.target.id;
     const requestOptionsDelete = {
       method: "DELETE",
-      headers: { Authorization: "Bearer " + token },
+      headers: { Authorization: `Bearer ${tokenConnected}` },
     };
     fetch("http://localhost:8000/posts/" + target, requestOptionsDelete)
       .then((response) => response.json())
@@ -140,7 +138,7 @@ const Post = (props) => {
           method: "GET",
           headers: {
             "Content-Type": "application/json",
-            Authorization: "Bearer " + token,
+            Authorization: `Bearer ${tokenConnected}`,
           },
         };
         fetch("http://localhost:8000/posts", requestOptions)
@@ -160,7 +158,7 @@ const Post = (props) => {
       method: "GET",
       headers: {
         "Content-Type": "application/json",
-        Authorization: "Bearer " + token,
+        Authorization: `Bearer ${tokenConnected}`,
       },
     };
 
@@ -168,7 +166,7 @@ const Post = (props) => {
       const requestOptionsLike = {
         method: "POST",
         headers: {
-          Authorization: "Bearer " + token,
+          Authorization: `Bearer ${tokenConnected}`,
           Accept: "application/json",
           "Content-Type": "application/json",
         },
@@ -195,7 +193,7 @@ const Post = (props) => {
       const requestOptionsLike = {
         method: "POST",
         headers: {
-          Authorization: "Bearer " + token,
+          Authorization: `Bearer ${tokenConnected}`,
           Accept: "application/json",
           "Content-Type": "application/json",
         },
@@ -224,7 +222,7 @@ const Post = (props) => {
   const newComment = useRef([]);
   const addNewComment = (el) => {
     newComment.current.push(el);
-    document.getElementById("text-new-comment").value = "";
+    newComment.current[0].value = "";
   };
 
   const handlePostComment = async (e) => {
@@ -234,14 +232,14 @@ const Post = (props) => {
     const requestOptionsNewComment = {
       method: "POST",
       headers: {
-        Authorization: "Bearer " + token,
+        Authorization: `Bearer ${tokenConnected}`,
         Accept: "application/json",
         "Content-Type": "application/json",
       },
       body: JSON.stringify({
         userId: userId,
         comment,
-        name,
+        name: nameConnected,
       }),
     };
     await fetch(
@@ -254,7 +252,7 @@ const Post = (props) => {
           method: "GET",
           headers: {
             "Content-Type": "application/json",
-            Authorization: "Bearer " + token,
+            Authorization: `Bearer ${tokenConnected}`,
           },
         };
         fetch(
@@ -352,20 +350,21 @@ const Post = (props) => {
             <p className="dispayNamePoster">
               {post.name === name ? "Your post" : post.name}
             </p>
-
-            <Icon.Pencil
-              className="iconPost"
-              id={post._id}
-              onClick={() => {
-                handleShow();
-                setModification(true);
-              }}
-            />
-            <Icon.Trash
-              className="iconPost"
-              id={post._id}
-              onClick={(e) => handleDelete(e)}
-            />
+            <div>
+              <Icon.Pencil
+                className="iconPost"
+                id={post._id}
+                onClick={() => {
+                  handleShow();
+                  setModification(true);
+                }}
+              />
+              <Icon.Trash
+                className="iconPost"
+                id={post._id}
+                onClick={(e) => handleDelete(e)}
+              />
+            </div>
           </Card.Header>
           <Card.Body>
             <div className="clock">
@@ -406,7 +405,7 @@ const Post = (props) => {
               <input
                 type="text"
                 id="text-new-comment"
-                placeholder="Ajouter un commentaire"
+                placeholder="Add your comment here !"
                 ref={addNewComment} // refattribut permet de stocker une référence à un élément ou composant React particulier renvoyé par la render()
                 className="display-new-comment-input"
               />
@@ -417,7 +416,7 @@ const Post = (props) => {
                   handlePostComment(e);
                 }}
               >
-                Commenter
+                Comment
               </button>
             </div>
             {post.comments
@@ -431,7 +430,7 @@ const Post = (props) => {
                     />
                   </p>
                   <div className="display-name-commentator-and-text">
-                    <p className="name-commentator">{comment.name} :</p>
+                    <p className="name-commentator">{comment.name} </p>
                     <p className="display-commentator-text">
                       {comment.comment}
                     </p>

@@ -3,28 +3,26 @@ import Card from "react-bootstrap/Card";
 import "./Rules.css";
 function Rules() {
   return (
-    <div>
+    <div className="background-rules">
       <h1 className="rules-title">
         {" "}
         ⛔️ Lorsque vous utilisez Groupomania, il est interdit de :
       </h1>
       <Card className="body-rules">
-        <Card.Body>
+        <Card.Body className="card-rules">
           Masquer votre identité, usurper l’identité d’une autre personne ou
           présenter de manière inexacte votre affiliation avec toute personne ou
           toute entité ;
         </Card.Body>
       </Card>
       <Card className="body-rules">
-        <Card.Body>
-          {" "}
+        <Card.Body className="card-rules">
           Vous engager dans toute activité qui exploite, fait du tort ou menace
           de faire du tort à des enfants ;
         </Card.Body>
       </Card>
       <Card className="body-rules">
-        <Card.Body>
-          {" "}
+        <Card.Body className="card-rules">
           Créer ou afficher du contenu illégal, discriminatoire, dangereux,
           frauduleux, trompeur ou diffamatoire, ou qui favorise ou encourage la
           violence, la violation des lois, l’automutilation, les troubles de
@@ -32,21 +30,21 @@ function Rules() {
         </Card.Body>
       </Card>
       <Card className="body-rules">
-        <Card.Body>
+        <Card.Body className="card-rules">
           {" "}
           Violer la loi ou enfreindre les droits de Groupomania ou de tout autre
           tiers ;
         </Card.Body>
       </Card>
       <Card className="body-rules">
-        <Card.Body>
+        <Card.Body className="card-rules">
           {" "}
           Interférer avec le bon fonctionnement de Groupomania ou avec
           l’utilisation de Groupomania par une autre personne ;
         </Card.Body>
       </Card>
       <Card className="body-rules">
-        <Card.Body>
+        <Card.Body className="card-rules">
           Accéder à Groupomania ou à du contenu ou des informations relatives à
           Groupomania par des moyens non autorisés par Groupomania (notamment
           par collecte ou par analyse) ; contourner les contrôles d’accès ; ou
@@ -56,7 +54,7 @@ function Rules() {
         </Card.Body>
       </Card>
       <Card className="body-rules">
-        <Card.Body>
+        <Card.Body className="card-rules">
           {" "}
           Partager des tokens d’accès administrateur avec un tiers qui n’a pas
           été expressément approuvé par Groupomania ou lui accorder un accès
@@ -73,7 +71,7 @@ function Rules() {
         </Card.Body>
       </Card>
       <Card className="body-rules">
-        <Card.Body>
+        <Card.Body className="card-rules">
           {" "}
           Importer des virus, des programmes ou des codes malveillants, ou faire
           quoi que ce soit qui pourrait endommager, désactiver, surcharger ou
@@ -83,7 +81,7 @@ function Rules() {
         </Card.Body>
       </Card>
       <Card className="body-rules">
-        <Card.Body>
+        <Card.Body className="card-rules">
           {" "}
           Notez également que Groupomania ne peut pas être utilisé par des
           mineurs de moins de 13 ans. Si vous avez moins de 13 ans, vous n’êtes

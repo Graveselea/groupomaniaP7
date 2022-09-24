@@ -19,6 +19,10 @@
   border-radius: 8px;
   background-color: white;
 }
+
+.text-center .link-sign {
+  color: #fd2d01;
+}
 .Auth-form-content {
   padding-left: 12%;
   padding-right: 12%;
@@ -34,4 +38,27 @@ label {
   font-size: 14px;
   font-weight: 600;
   color: rgb(34, 34, 34);
+}
+
+.d-grid {
+  background-color: #fd2d01;
+  border-radius: 0.375rem;
+  border-color: #fd2d01;
+}
+
+.d-grid:hover {
+  background-color: #fd2b01c1;
+  border-color: #fd2b01c1;
+}
+
+.btn-submit {
+  border-color: #fd2d01;
+  color: white !important;
+  font-weight: bold !important;
+}
+
+.btn-submit:hover {
+  border-color: #fd2b01c1 !important;
+  color: white !important;
+  font-weight: bold !important;
 }

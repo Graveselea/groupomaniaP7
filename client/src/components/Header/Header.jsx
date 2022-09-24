@@ -21,7 +21,6 @@ function Header() {
     setUserId("");
     setName(undefined);
     navigate("/");
-    //--Sweet Alert
     SwalLogOut.fire({
       title: "See you soon !",
       text: "",
@@ -45,7 +44,7 @@ function Header() {
           src={logowhite}
           alt="logo-groupomania"
           className="gpm-banner-logo"
-        />{" "}
+        />
         <nav className="nav-item">
           {token === undefined && userId === "" ? (
             ""

@@ -9,7 +9,6 @@ import {
   isAdminInContext,
 } from "../../CreateContext";
 
-// eslint-disable-next-line import/no-anonymous-default-export
 export default function Log() {
   let [authMode, setAuthMode] = useState("signin");
 
@@ -54,7 +53,7 @@ export default function Log() {
   };
 
   // SignIn
-  const handleFormSignIn = (event, props) => {
+  const Login = (event, props) => {
     event.preventDefault();
     const email = inputsSignIn.current[0];
     const password = inputsSignIn.current[1];
@@ -93,7 +92,7 @@ export default function Log() {
           password: password.value,
         }),
       };
-      fetch("http://localhost:8000/auth/login", requestOptions)
+      fetch("http://localhost:8000/auth/Login", requestOptions)
         .then((response) => response.json())
         .then((data) => {
           setToken(data.token);
@@ -202,12 +201,12 @@ export default function Log() {
   if (authMode === "signin") {
     return (
       <div className="Auth-form-container">
-        <form className="Auth-form" onSubmit={handleFormSignIn}>
+        <form className="Auth-form" onSubmit={Login}>
           <div className="Auth-form-content">
             <h3 className="Auth-form-title">Sign In</h3>
             <div className="text-center">
               Not registered yet?{" "}
-              <span className="link-danger" onClick={changeAuthMode}>
+              <span className="link-sign" onClick={changeAuthMode}>
                 Sign Up
               </span>
             </div>
@@ -237,7 +236,7 @@ export default function Log() {
               {renderErrorMessage("passErrorSignIn")}
             </div>
             <div className="d-grid gap-2 mt-3">
-              <button type="submit" className="btn btn-danger">
+              <button type="submit" className="btn btn-submit">
                 Submit
               </button>
             </div>
@@ -255,7 +254,7 @@ export default function Log() {
           <h3 className="Auth-form-title">Sign Up</h3>
           <div className="text-center">
             Already registered?{" "}
-            <span className="link-danger" onClick={changeAuthMode}>
+            <span className="link-sign" onClick={changeAuthMode}>
               Sign In
             </span>
           </div>
@@ -264,7 +263,7 @@ export default function Log() {
             <input
               type="name"
               className="form-control mt-1"
-              placeholder="e.g Jane Doe"
+              placeholder="Full Name"
               ref={addInputsSignUp}
               id="nameSignUp"
               name="nameSignUp"
@@ -296,7 +295,7 @@ export default function Log() {
             {renderErrorMessage("passErrorSignUp")}
           </div>
           <div className="d-grid gap-2 mt-3">
-            <button type="submit" className="btn btn-danger">
+            <button type="submit" className="btn btn-submit">
               Submit
             </button>
           </div>
