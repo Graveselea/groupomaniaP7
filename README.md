@@ -32,13 +32,12 @@
 
 - Dans le dossier server, créer un fichier .env
 - Dans le fichier .env, ajouter les variables d'environnement suivantes:
-
-PORT = your_port
-MONGO_URI = your_database_url
-ADMIN_EMAIL = your_admin_email
-ADMIN_PASSWORD = your_admin_password
-ADMIN_NAME = your_admin_name
-SECRET = your__password_for_jwt_encrypted
+'PORT = your_port'
+'MONGO_URI = your_database_url'
+'ADMIN_EMAIL = your_admin_email'
+'ADMIN_PASSWORD = your_admin_password'
+'ADMIN_NAME = your_admin_name'
+'SECRET = your__password_for_jwt_encrypted'
 
 ## Utilisation
 
