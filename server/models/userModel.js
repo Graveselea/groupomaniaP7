@@ -3,6 +3,7 @@ const uniqueValidator = require("mongoose-unique-validator"); // plugin gérant 
 
 const mongooseErrors = require("mongoose-errors"); //--Gestionnaire d'erreurs monggose
 
+//-- Schema User avec type et obligation de chaque champ
 const userSchema = new mongoose.Schema(
   {
     email: {
@@ -16,10 +17,10 @@ const userSchema = new mongoose.Schema(
     isRuleValidated: { type: Boolean, required: true, default: false }, // règle obligatoire
   },
   {
-    timestamps: true,
+    timestamps: true, // Ajoute automatiquement createdAt et updatedAt
   }
 );
-userSchema.plugin(uniqueValidator); // plugin gérant erreur mongoose appliqué au Schema mongosse
+userSchema.plugin(uniqueValidator);
 
 userSchema.plugin(mongooseErrors);
 

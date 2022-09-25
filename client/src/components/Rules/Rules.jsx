@@ -1,7 +1,9 @@
 import React from "react";
 import Card from "react-bootstrap/Card";
 import "./Rules.css";
+
 function Rules() {
+  //------------------Return Rules------------------//
   return (
     <div className="background-rules">
       <h1 className="rules-title">

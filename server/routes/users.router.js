@@ -1,19 +1,16 @@
 const express = require("express");
 const usersRoutes = express.Router();
 const { authenticateUser } = require("../middleware/auth");
+
+// Controllers
 const {
   getAllUsers,
   getOneUser,
   validatedRules,
 } = require("../controllers/users");
 
-//--Route GET qui renvoie toutes les utilisateur
-usersRoutes.get("/", authenticateUser, getAllUsers);
-
-//--Route GET qui renvoie un utilisateur
-usersRoutes.get("/:id", authenticateUser, getOneUser);
-
-//--Route POST qui pour la validation des règles
-usersRoutes.post("/:id", authenticateUser, validatedRules);
+usersRoutes.get("/", authenticateUser, getAllUsers); // affichage users
+usersRoutes.get("/:id", authenticateUser, getOneUser); // :id = (deux points) variable + récupération d'un user
+usersRoutes.post("/:id", authenticateUser, validatedRules); // :id = (deux points) variable + validation des règles
 
 module.exports = { usersRoutes };

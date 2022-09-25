@@ -10,9 +10,10 @@ import {
   UserIdContext,
   NameContext,
   isAdminInContext,
-} from "../../CreateContext";
+} from "../../utils/context/CreateContext";
 
 const Post = (props) => {
+  //------------------Context------------------//
   const Swal = require("sweetalert2");
   const { post, setPosts } = props.data;
 
@@ -27,43 +28,46 @@ const Post = (props) => {
 
   const [modification, setModification] = useState(false);
   const [show, setShow] = useState(false);
+
+  //------------------Modal------------------//
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
 
-  //Modification d'un post */
-  //--Récupération de la saisie de textArea et de l'image
-  const textAreaAndImage = useRef([]);
+  //------------------Modification Post------------------//
+  const textAreaAndImage = useRef([]); //--ref for textArea and image--//
   const addTextAreaAndImage = (el) => {
-    textAreaAndImage.current.push(el);
+    textAreaAndImage.current.push(el); //--push textArea and image--//
   };
 
   const sendModification = (event) => {
     event.preventDefault();
     const form = event.target;
     const postId = form[1].id;
-    const formData = new FormData();
+    const formData = new FormData(); //--create formData--//
     const requestOptionsModifiyPost = {
+      //--request options PUT--//
       method: "PUT",
       headers: { Authorization: `Bearer ${tokenConnected}` },
       body: formData,
     };
-
     if (form[0].value === "" && form[2].files[0] === undefined) {
+      // if textArea and image are empty
       Swal.fire("Vous avez oublié de saisir un texte et/ou un image");
     } else if (form[0].value === "" && form[2].files[0] !== undefined) {
+      // if textArea is empty and image is not empty
       formData.append("image", form[2].files[0]);
-
-      fetch("http://localhost:8000/posts/" + postId, requestOptionsModifiyPost)
+      fetch("http://localhost:8000/posts/" + postId, requestOptionsModifiyPost) //--fetch to modify post--//
         .then((response) => response.json())
         .then((data) => {
           const requestOptions = {
+            //--request options GET--//
             method: "GET",
             headers: {
               "Content-Type": "application/json",
               Authorization: `Bearer ${tokenConnected}`,
             },
           };
-          fetch("http://localhost:8000/posts", requestOptions)
+          fetch("http://localhost:8000/posts", requestOptions) //--fetch to get all posts--//
             .then((response) => response.json())
             .then((data) => {
               const posts = data;
@@ -74,19 +78,21 @@ const Post = (props) => {
             });
         });
     } else if (form[0].value !== "" && form[2].files[0] === undefined) {
+      // if textArea is not empty and image is empty
       formData.append("post", form[0].value);
 
-      fetch("http://localhost:8000/posts/" + postId, requestOptionsModifiyPost)
+      fetch("http://localhost:8000/posts/" + postId, requestOptionsModifiyPost) // --fetch to modify post--//
         .then((response) => response.json())
         .then((data) => {
           const requestOptions = {
+            //--request options GET--//
             method: "GET",
             headers: {
               "Content-Type": "application/json",
               Authorization: `Bearer ${tokenConnected}`,
             },
           };
-          fetch("http://localhost:8000/posts", requestOptions)
+          fetch("http://localhost:8000/posts", requestOptions) //--fetch to get all posts--//
             .then((response) => response.json())
             .then((data) => {
               const posts = data;
@@ -97,20 +103,22 @@ const Post = (props) => {
             });
         });
     } else if (form[0].value !== "" && form[2].files[0] !== undefined) {
+      // if textArea and image are not empty
       formData.append("post", form[0].value);
       formData.append("image", form[2].files[0]);
 
-      fetch("http://localhost:8000/posts/" + postId, requestOptionsModifiyPost)
+      fetch("http://localhost:8000/posts/" + postId, requestOptionsModifiyPost) //--fetch to modify post--//
         .then((response) => response.json())
         .then((data) => {
           const requestOptions = {
+            //--request options GET--//
             method: "GET",
             headers: {
               "Content-Type": "application/json",
               Authorization: `Bearer ${tokenConnected}`,
             },
           };
-          fetch("http://localhost:8000/posts", requestOptions)
+          fetch("http://localhost:8000/posts", requestOptions) //--fetch to get all posts--//
             .then((response) => response.json())
             .then((data) => {
               const posts = data;
@@ -123,25 +131,27 @@ const Post = (props) => {
     }
   };
 
-  //Suppression d'un post
+  //------------------Delete Post------------------//
   const handleDelete = async (event) => {
     event.preventDefault();
-    let target = event.target.id;
+    let target = post._id;
     const requestOptionsDelete = {
+      //--request options DELETE--//
       method: "DELETE",
       headers: { Authorization: `Bearer ${tokenConnected}` },
     };
-    fetch("http://localhost:8000/posts/" + target, requestOptionsDelete)
+    fetch("http://localhost:8000/posts/" + target, requestOptionsDelete) //--fetch to delete post--//
       .then((response) => response.json())
       .then((data) => {
         const requestOptions = {
+          //--request options GET--//
           method: "GET",
           headers: {
             "Content-Type": "application/json",
             Authorization: `Bearer ${tokenConnected}`,
           },
         };
-        fetch("http://localhost:8000/posts", requestOptions)
+        fetch("http://localhost:8000/posts", requestOptions) //--fetch to get all posts--//
           .then((response) => response.json())
           .then((data) => {
             const posts = data;
@@ -150,11 +160,12 @@ const Post = (props) => {
       });
   };
 
-  //Like
+  //------------------Like Post------------------//
   const handleLike = async (event) => {
     let postId = event;
-    const arrayUsersLiked = post.usersLiked;
+    const arrayUsersLiked = post.usersLiked; //--array of users who liked the post--//
     const requestOptions = {
+      //--request options PUT--//
       method: "GET",
       headers: {
         "Content-Type": "application/json",
@@ -163,7 +174,9 @@ const Post = (props) => {
     };
 
     if (!arrayUsersLiked.includes(userId)) {
+      //--if user is not in array of users who liked the post--//
       const requestOptionsLike = {
+        //--request options POST--//
         method: "POST",
         headers: {
           Authorization: `Bearer ${tokenConnected}`,
@@ -171,18 +184,19 @@ const Post = (props) => {
           "Content-Type": "application/json",
         },
         body: JSON.stringify({
-          userId: userId,
-          like: 1,
+          //--body of request--//
+          userId: userId, //--id of user who liked the post--//
+          like: 1, //--like of user who liked the post--//
         }),
       };
 
       await fetch(
-        "http://localhost:8000/posts/" + postId + "/like",
+        "http://localhost:8000/posts/" + postId + "/like", //--fetch to like post--//
         requestOptionsLike
       )
         .then((response) => response.json())
         .then((data) => {
-          fetch("http://localhost:8000/posts", requestOptions)
+          fetch("http://localhost:8000/posts", requestOptions) //--fetch to get all posts--//
             .then((response) => response.json())
             .then((data) => {
               const posts = data;
@@ -191,6 +205,7 @@ const Post = (props) => {
         });
     } else {
       const requestOptionsLike = {
+        //--request options POST--//
         method: "POST",
         headers: {
           Authorization: `Bearer ${tokenConnected}`,
@@ -198,18 +213,19 @@ const Post = (props) => {
           "Content-Type": "application/json",
         },
         body: JSON.stringify({
-          userId: userId,
-          like: 0,
+          //--body of request--//
+          userId: userId, //--id of user who liked the post--//
+          like: 0, //--like of user who liked the post--//
         }),
       };
 
       await fetch(
-        "http://localhost:8000/posts/" + postId + "/like",
+        "http://localhost:8000/posts/" + postId + "/like", //--fetch to like post--//
         requestOptionsLike
       )
         .then((response) => response.json())
         .then((data) => {
-          fetch("http://localhost:8000/posts", requestOptions)
+          fetch("http://localhost:8000/posts", requestOptions) //--fetch to get all posts--//
             .then((response) => response.json())
             .then((data) => {
               const posts = data;
@@ -219,17 +235,19 @@ const Post = (props) => {
     }
   };
 
+  //------------------Comment Post------------------//
   const newComment = useRef([]);
   const addNewComment = (el) => {
-    newComment.current.push(el);
-    newComment.current[0].value = "";
+    newComment.current.push(el); //--add new comment to array of comments--//
+    newComment.current[0].value = ""; //--empty textArea--//
   };
 
   const handlePostComment = async (e) => {
     e.preventDefault();
     const postId = post._id;
-    const comment = newComment.current[0].value;
+    const comment = newComment.current[0].value; // --value of textArea--//
     const requestOptionsNewComment = {
+      //--request options POST--//
       method: "POST",
       headers: {
         Authorization: `Bearer ${tokenConnected}`,
@@ -237,18 +255,20 @@ const Post = (props) => {
         "Content-Type": "application/json",
       },
       body: JSON.stringify({
-        userId: userId,
-        comment,
-        name: nameConnected,
+        //--body of request--//
+        userId: userId, //--id of user who commented the post--//
+        comment, //--comment of user who commented the post--//
+        name: nameConnected, //--name of user who commented the post--//
       }),
     };
     await fetch(
-      "http://localhost:8000/posts/" + postId + "/comment",
+      "http://localhost:8000/posts/" + postId + "/comment", //--fetch to comment post--//
       requestOptionsNewComment
     )
       .then((response) => response.json())
       .then((data) => {
         const requestOptions = {
+          //--request options GET--//
           method: "GET",
           headers: {
             "Content-Type": "application/json",
@@ -256,12 +276,12 @@ const Post = (props) => {
           },
         };
         fetch(
-          "http://localhost:8000/posts/" + postId + "/comments",
+          "http://localhost:8000/posts/" + postId + "/comments", //--fetch to get all comments of post--//
           requestOptions
         )
           .then((response) => response.json())
           .then((data) => {
-            fetch("http://localhost:8000/posts", requestOptions)
+            fetch("http://localhost:8000/posts", requestOptions) //--fetch to get all posts--//
               .then((response) => response.json())
               .then((data) => {
                 const posts = data;
@@ -271,23 +291,26 @@ const Post = (props) => {
       });
   };
 
-  // Get user data
-  // const requestOptions = {
-  //   method: "GET",
-  //   headers: {
-  //     "Content-Type": "application/json",
-  //     Authorization: "Bearer " + token,
-  //   },
-  // };
-  // fetch("http://localhost:8000/users/" + userId, requestOptions).then(
-  //   (response) => response.json()
-  // );
-
+  //------------------Get user data------------------//
+  const requestOptions = {
+    //--request options GET--//
+    method: "GET",
+    headers: {
+      "Content-Type": "application/json",
+      Authorization: "Bearer " + token,
+    },
+  };
+  fetch("http://localhost:8000/users/" + userId, requestOptions).then(
+    //--fetch to get user data--//
+    (response) => response.json()
+  );
+  //--if user is the author of the post or is admin--//
   return post.userId === userId || isAdmin === true ? (
+    //--if user want to modify the post--//
     modification ? (
       <>
         <Modal show={show} onHide={handleClose} animation={false}>
-          <Modal.Header closeButton>
+          <Modal.Header>
             <Modal.Title> Modify your post !</Modal.Title>
           </Modal.Header>
           <Modal.Body>
@@ -333,6 +356,7 @@ const Post = (props) => {
         </Modal>
       </>
     ) : (
+      //--if user don't want to modify the post--//
       <div className="post">
         <Card
           data-set={post._id}
@@ -419,7 +443,7 @@ const Post = (props) => {
                 Comment
               </button>
             </div>
-            {post.comments
+            {post.comments // boucle pour afficher les commentaires
               .map((comment, index) => (
                 <div key={index} className="display-comment">
                   <p className="dispay-avatar-commentator">
@@ -443,6 +467,7 @@ const Post = (props) => {
       </div>
     )
   ) : (
+    //--if user is not the author of the post or is not admin--//
     <div className="post">
       <Card className="Card" border="danger" style={{ width: "28rem" }}>
         <Card.Header className="Card-header">
@@ -507,7 +532,7 @@ const Post = (props) => {
               Commenter
             </button>
           </div>
-          {post.comments
+          {post.comments // boucle pour afficher les commentaires
             .map((comment, index) => (
               <div key={index} className="display-comment">
                 <p className="dispay-avatar-commentator">

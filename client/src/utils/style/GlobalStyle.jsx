@@ -1,7 +1,7 @@
 import { createGlobalStyle } from "styled-components";
 
-function GlobalStyle() {
-  const StyledGlobalStyle = createGlobalStyle`
+//------------------Global Style (LATO-font)------------------//
+const StyledGlobalStyle = createGlobalStyle`
     * {
 font-family: 'Lato', sans-serif;
 }
@@ -10,6 +10,5 @@ font-family: 'Lato', sans-serif;
         margin: 0;  
     }
 `;
-}
 
-export default GlobalStyle;
+export default StyledGlobalStyle;

@@ -1,14 +1,6 @@
 import React from "react";
-import { GlobalStyle } from "./utils/style/GlobalStyle";
-import {
-  BrowserRouter as Router,
-  Route,
-  Routes,
-  Switch,
-  Link,
-  Navigate,
-  useNavigate,
-} from "react-router-dom";
+import StyledGlobalStyle from "./utils/style/GlobalStyle"; // style global
+import { BrowserRouter as Router, Route, Routes } from "react-router-dom"; // Router
 import Posts from "./pages/Posts/Posts";
 import Home from "./pages/Home/Home";
 import Header from "./components/Header/Header";
@@ -22,15 +14,17 @@ import {
   NameContext,
   RulesInContext,
   isAdminInContext,
-} from "./CreateContext";
+} from "./utils/context/CreateContext"; // create context
 
 function App() {
-  const [token, setToken] = React.useState();
-  const [userId, setUserId] = React.useState();
-  const [name, setName] = React.useState();
-  const [rules, setRules] = React.useState();
-  const [isAdmin, setIsAdmin] = React.useState();
+  //------------------useState------------------//
+  const [token, setToken] = React.useState(); // token state
+  const [userId, setUserId] = React.useState(); // userId state
+  const [name, setName] = React.useState(); // name state
+  const [rules, setRules] = React.useState(); // rules state
+  const [isAdmin, setIsAdmin] = React.useState(); // isAdmin state
 
+  //------------------Return ROUTER et routes------------------//
   return (
     <div className="App">
       <Router>
@@ -39,7 +33,7 @@ function App() {
             <NameContext.Provider value={[name, setName]}>
               <isAdminInContext.Provider value={[isAdmin, setIsAdmin]}>
                 <RulesInContext.Provider value={[rules, setRules]}>
-                  <GlobalStyle />
+                  <StyledGlobalStyle />
                   <Header />
                   <Routes>
                     <Route exact path="/" element={<Home />}></Route>

@@ -14,7 +14,7 @@ function createPost(req, res, next) {
     name: req.body.name,
     imageUrl: `${req.protocol}://${req.get("host")}/images/${
       req.file?.filename
-    }`, //--Reconstruction de l'Url de l'image
+    }`,
   });
   post
     .save()
@@ -24,17 +24,14 @@ function createPost(req, res, next) {
 
 //Modification d'un post
 function modifyPost(req, res, next) {
-  //--Test > Nouvelle image ou non
-  const postObject = req.file //--req.file ? est un opérateur ternaire pour savoir si un fichier existe
+  const postObject = req.file
     ? {
         ...req.body.post,
         imageUrl: `${req.protocol}://${req.get("host")}/images/${
           req.file.filename
-        }`, //--Reconstruction de l'Url de l'image
+        }`,
       }
     : { ...req.body };
-  //--Récupération du post dans la base et vérification qu'il appartient bien à la personne qui effectue la requête delete
-  //--et autorisation à l'administrateur
   Post.findOne({ _id: req.params.id }).then((post) => {
     if (!post) {
       return res.status(404).json({
@@ -49,15 +46,13 @@ function modifyPost(req, res, next) {
         });
       }
     });
-    //--Suppression de lancienne image dans le système de fichier
-    const fileName = post.imageUrl.split("/images/")[1]; //--Nom de l'ancienne post
+    const fileName = post.imageUrl.split("/images/")[1];
     fs.unlink(`images/${fileName}`, () => {
-      //--Mise à jour de la post
       Post.updateOne(
         { _id: req.params.id },
         { ...postObject, _id: req.params.id }
-      ) //--Cette ligne permet de comparer les id afin d'être certain de mettre à jour le bon post
-        .then(() => res.status(200).json({ message: "Objet modifié !" }))
+      )
+        .then(() => res.status(200).json({ message: "Post modifié !" }))
         .catch((error) => res.status(400).json({ error }));
     });
   });
@@ -65,8 +60,7 @@ function modifyPost(req, res, next) {
 
 //Suppression d'un post
 function deletePost(req, res, next) {
-  //--Vérification du propriétaire du post et autotisation à l'administrateur
-  Post.findOne({ _id: req.params.id }) //--On trouve l'objet dans la base de données
+  Post.findOne({ _id: req.params.id })
     .then((post) => {
       if (!post) {
         return res.status(404).json({ message: "Post non trouvée !" });
@@ -79,10 +73,9 @@ function deletePost(req, res, next) {
         ) {
           return res.status(403).json({ message: "Requête non autorisée !" });
         } else {
-          const filename = post.imageUrl.split("/images/")[1]; //--Ici, split renvoit un tableau composé de deux éléments. 1- Ce qu'il y avant /images/ et un deuxième élément avec ce qu'il y après /images/
+          const filename = post.imageUrl.split("/images/")[1];
           fs.unlink(`images/${filename}`, () => {
-            //--unlink est une fonction de fs (file système qui permet de supprimer un fichier``)
-            Post.deleteOne({ _id: req.params.id }) //--Ici, pas besoin de 2eme argument car c'est une suppression
+            Post.deleteOne({ _id: req.params.id })
               .then(() => res.status(200).json({ message: "Post supprimé !" }))
               .catch((error) => res.status(400).json({ error }));
           });
@@ -102,7 +95,7 @@ function getOnePost(req, res, next) {
 //Récupération de tous les posts
 function getAllPosts(req, res, next) {
   Post.find()
-    .sort({ createdAt: -1 }) //--On récupère tous les posts et on les trie par date de création
+    .sort({ createdAt: -1 })
     .then((posts) => res.status(200).json(posts))
     .catch((error) => res.status(400).json({ error }));
 }
@@ -112,8 +105,6 @@ function likePost(req, res, next) {
   //--Si l'utilisateur ajoute un like
   if (req.body.like === 1) {
     Post.findOne({ _id: req.params.id }).then((post) => {
-      //--On regarde s'il est déjà dans le tableau "usersLiked"
-      //--S'il n'y est pas, on incrémente "Like" et on l'ajoute au tableau "usersLiked"
       if (!post.usersLiked.includes(req.body.userId)) {
         if (!post.usersLiked.includes(req.body.userId)) {
           Post.updateOne(
@@ -130,7 +121,6 @@ function likePost(req, res, next) {
   //--Si l'utilisateur supprime son "like"
   if (req.body.like === 0) {
     Post.findOne({ _id: req.params.id }).then((post) => {
-      //--S'il est dans le tableau "usersLiked", on décrémente "Like" et on le supprime du tableau "usersLiked"
       if (post.usersLiked.includes(req.body.userId)) {
         Post.updateOne(
           { _id: req.params.id },
@@ -143,6 +133,7 @@ function likePost(req, res, next) {
   }
 }
 
+//--Commentaires
 function commentPost(req, res, next) {
   //--On retrouve le post dans la base de données
   Post.findOne({ _id: req.params.id }).then((post) => {
@@ -165,13 +156,14 @@ function commentPost(req, res, next) {
       .catch((error) => res.status(400).json({ error }));
   });
 }
-
+//-- Avoir tout les commentaires d'un post
 function getAllComments(req, res, next) {
   Post.findOne({ _id: req.params.id })
     .then((post) => res.status(200).json(post.comments))
     .catch((error) => res.status(400).json({ error }));
 }
 
+//-- Exportation des fonctions
 module.exports = {
   createPost,
   modifyPost,

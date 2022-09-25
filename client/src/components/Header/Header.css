@@ -4,31 +4,28 @@
   margin-left: 20px;
   margin-right: 50px;
 }
-
 .XCircle {
   cursor: pointer;
   margin-left: 40px;
   margin-right: 25px;
-  background-color: #000000;
-  color: #ffffff;
+  background-color: #000;
+  color: #fff;
   border-radius: 5px;
   height: 40px;
   width: 60px;
 }
-
 .cardchecklist {
   cursor: pointer;
   margin-left: 40px;
-  background-color: #ffffff;
-  color: #000000;
+  background-color: #fff;
+  color: #000;
   border-radius: 5px;
   height: 40px;
   width: 60px;
 }
-
 .cardchecklist:hover {
   background-color: #ffd7d7;
-  color: #ffffff;
+  color: #fff;
   border: 1px solid #ffd7d7;
   cursor: pointer;
 }
@@ -44,7 +41,6 @@
   top: -100px;
   z-index: 7;
 }
-
 .section-header {
   position: fixed;
   top: 0;
@@ -58,17 +54,14 @@
   z-index: 5;
   background-position: fixed;
 }
-
 @media (max-width: 780px) {
-  .cardchecklist,
-  .XCircle {
+  .XCircle,
+  .cardchecklist {
     display: none;
   }
-
   .section-header {
     height: 80px;
   }
-
   .gpm-banner-logo {
     margin-top: 40px;
     width: auto;

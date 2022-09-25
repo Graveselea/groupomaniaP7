@@ -64,6 +64,29 @@ body.swal2-shown > [aria-hidden="true"] {
   border-radius: 10px;
 }
 
+.displayNoPost {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  max-width: 28rem;
+  width: 100%;
+  margin-left: auto;
+  margin-right: auto;
+  margin-top: 0px;
+  margin-bottom: 10px;
+  padding: 10px;
+  box-sizing: border-box;
+  border-radius: 10px;
+}
+
+.noPost {
+  color: #fff;
+  font-size: 1.8rem;
+  font-weight: 700;
+  position: relative;
+  z-index: 1;
+}
 .styleButton {
   cursor: pointer;
   background-color: red;
@@ -103,6 +126,44 @@ body.swal2-shown > [aria-hidden="true"] {
   margin-top: 130px;
   position: relative;
   z-index: 2;
+}
+
+/**custom spinner **/
+.custom-loader {
+  width: 100px;
+  height: 100px;
+  display: grid;
+  border: 8px solid #0000;
+  border-radius: 50%;
+  border-color: #ffd7d7 #0000;
+  animation: s6 1s infinite linear;
+  margin-top: 40%;
+  margin-bottom: auto;
+  margin-left: auto;
+  margin-right: auto;
+}
+.custom-loader::before,
+.custom-loader::after {
+  content: "";
+  grid-area: 1/1;
+  margin: 4px;
+  border: inherit;
+  border-radius: 50%;
+}
+.custom-loader::before {
+  border-color: #fd2d01 #0000;
+  animation: inherit;
+  animation-duration: 0.5s;
+  animation-direction: reverse;
+}
+.custom-loader::after {
+  margin: 16px;
+}
+
+@keyframes s6 {
+  100% {
+    transform: rotate(1turn);
+  }
 }
 
 /**background color**/

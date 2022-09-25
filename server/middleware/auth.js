@@ -1,23 +1,15 @@
-const jwt = require("jsonwebtoken");
-require("dotenv").config();
+const jwt = require("jsonwebtoken"); //-- Vérification de l'authentification de l'utilisateur
+require("dotenv").config(); //--Permet de récupérer les variables d'environnement
 
+//-- Vérification de l'authentification de l'utilisateur
 async function authenticateUser(req, res, next) {
   try {
-    //--Récupération du token dans le header de la requête
-    const token = req.headers.authorization.split(" ")[1]; //--Split permet de générer un tableau avec deux éléments dont le 1er est le mot bearer (ce mot se place automatiquement devant le token) et le deuxième le token
-    //--Décoder le token
-    const decodedToken = jwt.verify(token, process.env.SECRET); //--'SECRET' est la clé secrète
-    //--Une fois le token décodé, il devient un objet javaScript classqiue
-    //--On récupère l'userId qui est dedans
+    const token = req.headers.authorization.split(" ")[1];
+    const decodedToken = jwt.verify(token, process.env.SECRET);
     const userId = decodedToken.userId;
-    //--Ajout d'un objet auth à l'objet de requête qui contient le userId  extrait du token
     req.auth = { userId };
-    //--On vérifie que l'userId de la requête correspond à celui du token
     if (req.body.userId && req.body.userId !== userId) {
-      //--S'ils sont différents
-      // noinspection ExceptionCaughtLocallyJS
       throw "ID utilisateur non valable !";
-      //--S'ils sont identiques
     } else {
       next();
     }

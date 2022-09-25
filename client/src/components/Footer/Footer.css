@@ -8,23 +8,15 @@
   width: 100%;
   bottom: 0;
 }
-
-.rules-footer,
-.logout-footer {
+.logout-footer,
+.rules-footer {
   color: transparent;
 }
-
-.gpm-footer-logo {
-  width: 100px;
-  height: 100px;
-  margin: 0 20px 0 20px;
-}
-
 @media (max-width: 780px) {
   .logout-footer {
     cursor: pointer;
-    background-color: #000000;
-    color: #ffffff;
+    background-color: #000;
+    color: #fff;
     border-radius: 5px;
     height: 40px;
     width: 60px;
@@ -32,8 +24,8 @@
   }
   .rules-footer {
     cursor: pointer;
-    background-color: #ffffff;
-    color: #000000;
+    background-color: #fff;
+    color: #000;
     border-radius: 5px;
     height: 40px;
     width: 60px;
@@ -41,7 +33,7 @@
   }
   .rules-footer:hover {
     background-color: #ffd7d7;
-    color: #ffffff;
+    color: #fff;
     border: 1px solid #ffd7d7;
     cursor: pointer;
   }

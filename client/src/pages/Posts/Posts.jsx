@@ -7,14 +7,14 @@ import {
   NameContext,
   RulesInContext,
   UserIdContext,
-} from "../../CreateContext";
+} from "../../utils/context/CreateContext";
 import "./Posts.css";
 import Swal from "sweetalert2";
-import Loader from "../../utils/style/Atoms";
 
 export default function Posts() {
   const SwalWelcome = require("sweetalert2");
 
+  //------------------Context------------------//
   const [token, setToken] = React.useContext(TokenContext);
   const [name, setName] = React.useContext(NameContext);
   const [userId, setUserId] = React.useContext(UserIdContext);
@@ -27,11 +27,11 @@ export default function Posts() {
   const tokenConnected = JSON.parse(localStorage.getItem("token"));
   const nameConnected = JSON.parse(localStorage.getItem("name"));
 
+  //------------------Fetch posts + Changement acceptation règles------------------//
   useEffect(() => {
     const displayArticle = async () => {
-      const token = JSON.parse(localStorage.getItem("token"));
-      console.log(token);
       const reqOptions = {
+        // options de la requête GET--//
         method: "GET",
         headers: {
           Accept: "application/json",
@@ -39,12 +39,13 @@ export default function Posts() {
         },
       };
       setIsLoading(true);
-      await fetch("http://localhost:8000/posts", reqOptions)
+      await fetch("http://localhost:8000/posts", reqOptions) // requête GET--//
         .then((response) => response.json())
         .then((data) => {
           const posts = data;
           setPosts(posts);
           if (rules === false) {
+            // si les règles n'ont pas été acceptées
             SwalWelcome.fire({
               title: `Bonjour ${name} !`,
               text: "",
@@ -53,12 +54,14 @@ export default function Posts() {
               confirmButtonText: "J'accepte",
             }).then((result) => {
               if (result.isConfirmed) {
-                validatedRules();
+                // si l'utilisateur accepte les règles
+                validatedRules(); // fonction pour changer la valeur de rules en true
                 Swal.fire("Règles validées !");
               }
             });
           }
           if (rules === true) {
+            // si les règles ont été acceptées
             SwalWelcome.fire({
               title: `Bonjour ${name} !`,
               text: "",
@@ -70,65 +73,68 @@ export default function Posts() {
         });
     };
     displayArticle();
-  }, []);
+  }, []); // Ne s'affiche qu'une fois
 
   // Validation des règles
   function validatedRules() {
     const reqOptionsUser = {
+      // options de la requête POST--//
       method: "POST",
       headers: {
         Authorization: `Bearer ${tokenConnected}`,
       },
       body: JSON.stringify({
-        userId: userId,
-        isRuleValidated: "true",
+        // corps de la requête POST--//
+        userId: userId, // id de l'utilisateur
+        isRuleValidated: "true", // règles validées
       }),
     };
-    fetch("http://localhost:8000/users/" + userId, reqOptionsUser)
+    fetch("http://localhost:8000/users/" + userId, reqOptionsUser) // requête POST--//
       .then((response) => response.json())
       .then((data) => {
         setRules(data);
       });
   }
 
-  //Affichage des posts
-  // Ne s'affiche qu'une fois
-
-  //Création d'un post */
-  const textAndFiles = useRef([]);
+  //---------------Création des posts------------------//
+  const textAndFiles = useRef([]); // création d'un tableau pour stocker les fichiers et le texte
   const addtextAndFiles = (el) => {
-    textAndFiles.current.push(el);
+    textAndFiles.current.push(el); // ajout des fichiers et du texte dans le tableau
   };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     const form = e.target;
-    const formData = new FormData();
+    const formData = new FormData(); // création d'un objet FormData
     const reqOptionsCreate = {
+      // options de la requête POST--//
       method: "POST",
       headers: { Authorization: `Bearer ${tokenConnected}` },
-      body: formData,
+      body: formData, // corps de la requête POST--//
     };
 
     if (form[0].value === "" && form[1].files[0] === undefined) {
+      // si le texte et les fichiers sont vides
       await Swal.fire("Vous avez oublié de saisir un texte et/ou un image");
     } else if (form[0].value === "" && form[1].files[0] !== undefined) {
-      formData.append("image", form[1].files[0]);
-      formData.append("post", "Aucun texte saisie");
-      formData.append("name", name);
+      // si le texte est vide et qu'il y a des fichiers
+      formData.append("image", form[1].files[0]); // ajout de l'image dans le corps de la requête
+      formData.append("post", "Aucun texte saisie"); // ajout du texte dans le corps de la requête
+      formData.append("name", nameConnected); // ajout du nom de l'utilisateur dans le corps de la requête
       setIsLoading(true);
 
-      fetch("http://localhost:8000/posts", reqOptionsCreate)
+      fetch("http://localhost:8000/posts", reqOptionsCreate) // requête POST--//
         .then((response) => response.json())
         .then((data) => {
           const reqOptions = {
+            // options de la requête GET--//
             method: "GET",
             headers: {
               "Content-Type": "application/json",
               Authorization: `Bearer ${tokenConnected}`,
             },
           };
-          fetch("http://localhost:8000/posts", reqOptions)
+          fetch("http://localhost:8000/posts", reqOptions) // requête GET--//
             .then((response) => response.json())
             .then((data) => {
               const posts = data;
@@ -138,21 +144,23 @@ export default function Posts() {
             });
         });
     } else if (form[0].value !== "" && form[1].files[0] === undefined) {
-      formData.append("post", form[0].value);
-      formData.append("name", nameConnected);
+      // si le texte n'est pas vide et qu'il n'y a pas d'image
+      formData.append("post", form[0].value); // ajout du texte dans le corps de la requête
+      formData.append("name", nameConnected); // ajout du nom de l'utilisateur dans le corps de la requête
       setIsLoading(true);
 
-      fetch("http://localhost:8000/posts", reqOptionsCreate)
+      fetch("http://localhost:8000/posts", reqOptionsCreate) // requête POST--//
         .then((response) => response.json())
         .then((data) => {
           const reqOptions = {
+            // options de la requête GET--//
             method: "GET",
             headers: {
               "Content-Type": "application/json",
               Authorization: `Bearer ${tokenConnected}`,
             },
           };
-          fetch("http://localhost:8000/posts", reqOptions)
+          fetch("http://localhost:8000/posts", reqOptions) // requête GET--//
             .then((response) => response.json())
             .then((data) => {
               const posts = data;
@@ -162,22 +170,24 @@ export default function Posts() {
             });
         });
     } else if (form[0].value !== "" && form[1].files[0] !== undefined) {
-      formData.append("post", form[0].value);
-      formData.append("image", form[1].files[0]);
-      formData.append("name", nameConnected);
+      // si le texte n'est pas vide et qu'il y a des images
+      formData.append("post", form[0].value); // ajout du texte dans le corps de la requête
+      formData.append("image", form[1].files[0]); // ajout de l'image dans le corps de la requête
+      formData.append("name", nameConnected); // ajout du nom de l'utilisateur dans le corps de la requête
       setIsLoading(true);
 
-      fetch("http://localhost:8000/posts", reqOptionsCreate)
+      fetch("http://localhost:8000/posts", reqOptionsCreate) // requête POST--//
         .then((response) => response.json())
         .then((data) => {
           const reqOptions = {
+            // options de la requête GET--//
             method: "GET",
             headers: {
               "Content-Type": "application/json",
               Authorization: `Bearer ${tokenConnected}`,
             },
           };
-          fetch("http://localhost:8000/posts", reqOptions)
+          fetch("http://localhost:8000/posts", reqOptions) // requête GET--//
             .then((response) => response.json())
             .then((data) => {
               const posts = data;
@@ -191,15 +201,18 @@ export default function Posts() {
 
   useEffect(() => {
     if (!posts) {
-      setIsLoading(true);
+      // si il n'y a pas de posts
+      setIsLoading(true); // affichage du loader
     } else {
-      setIsLoading(false);
+      // si il y a des posts
+      setIsLoading(false); // arrêt du loader
     }
-  }, [posts]);
+  }, [posts]); // s'affiche à chaque fois que posts change
 
-  return isLoading ? (
-    <Loader></Loader>
+  return isLoading ? ( // si isLoading est true
+    <div className="custom-loader"></div>
   ) : (
+    // si isLoading est false
     <div>
       <ul className="background">
         <li></li>
@@ -246,15 +259,21 @@ export default function Posts() {
           </form>
         </div>
         <hr></hr>
-        {posts.length === 0 ? (
+        {posts.length === 0 ? ( // si il n'y a pas de posts
           <div className="displayNoPost">
             <h2 className="noPost">There are no posts yet. Write one!</h2>
           </div>
         ) : (
+          // si il y a des posts
           <div className="displayPosts">
-            {posts.map((post, index) => (
-              <Post key={index} data={{ post, setPosts }} />
-            ))}
+            {posts.map(
+              (
+                post,
+                index // boucle sur les posts
+              ) => (
+                <Post key={index} data={{ post, setPosts }} />
+              )
+            )}
           </div>
         )}
       </div>

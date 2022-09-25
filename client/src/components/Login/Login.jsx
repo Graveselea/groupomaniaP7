@@ -7,15 +7,16 @@ import {
   NameContext,
   RulesInContext,
   isAdminInContext,
-} from "../../CreateContext";
+} from "../../utils/context/CreateContext";
 
 export default function Log() {
-  let [authMode, setAuthMode] = useState("signin");
+  //------------------Context------------------//
+  let [authMode, setAuthMode] = useState("signin"); //--signin or signup--//
 
   const changeAuthMode = () => {
-    setAuthMode(authMode === "signin" ? "signup" : "signin");
+    setAuthMode(authMode === "signin" ? "signup" : "signin"); //--change authMode--//
   };
-  const [errorMessages, setErrorMessages] = useState({});
+  const [errorMessages, setErrorMessages] = useState({}); //--error messages--//
 
   const navigate = useNavigate();
   const SwalWelcome = require("sweetalert2");
@@ -26,6 +27,7 @@ export default function Log() {
   let [rules, setRules] = React.useContext(RulesInContext);
   let [isAdmin, setIsAdmin] = React.useContext(isAdminInContext);
 
+  //----Récupération des données du formulaire----//
   useEffect(() => {
     setToken(undefined);
     setUserId("");
@@ -33,6 +35,7 @@ export default function Log() {
     setRules("");
   }, []);
 
+  //--Errors messages--//
   const errors = {
     name: "Ceci n'est pas un nom valide",
     email: "Ceci n'est pas une adresse mail valide",
@@ -40,13 +43,13 @@ export default function Log() {
     ok: "",
   };
 
-  // Generate JSX code for error message
+  //--rendu message d'erreur--//
   const renderErrorMessage = (name) =>
     name === errorMessages.name && (
       <div className="error">{errorMessages.message}</div>
     );
 
-  //--Récupération de la saisie des inputs de connexion d'un compte existant
+  //--Récupération des inputs--//
   const inputsSignIn = useRef([]);
   const addInputsSignIn = (el) => {
     inputsSignIn.current.push(el);
@@ -57,14 +60,11 @@ export default function Log() {
     event.preventDefault();
     const email = inputsSignIn.current[0];
     const password = inputsSignIn.current[1];
-
-    //--S'il n'y a pas d'Email : on alerte l'utilisateur qu'il doit saisir un mail
     if (email.value === "") {
-      document.getElementById("emailSignIn").placeholder = "Oups ! Pas d'email";
-      //--S'il n'y a pas de mot de passe : on alerte l'utilisateur qu'il doit en saisir un
+      document.getElementById("emailSignIn").placeholder = "Oups ! Pas d'email"; //--message d'erreur mail--//
     } else if (
       email.value !== "" &&
-      !/^[\w-.]+@([\w-]+\.)+[\w-]{2,4}$/g.test(email.value)
+      !/^[\w-.]+@([\w-]+\.)+[\w-]{2,4}$/g.test(email.value) //--regex mail--//
     ) {
       setErrorMessages({
         name: "emailErrorSignIn",
@@ -72,36 +72,38 @@ export default function Log() {
       });
     } else if (password.value === "") {
       document.getElementById("passwordSignIn").placeholder =
-        "Re oups ! Pas de mot de passe";
+        "Re oups ! Pas de mot de passe"; //--message d'erreur password--//
     } else if (
       password.value !== "" &&
       !/^(?=.{10,}$)(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*\W).*$/g.test(
         password.value
-      )
+      ) //--regex password--//
     ) {
       setErrorMessages({ name: "passErrorSignIn", message: errors.pass });
     } else {
       const requestOptions = {
+        //--options de la requête POST--//
         method: "POST",
         headers: {
           "Content-Type": "application/json",
           Accept: "application/json",
         },
         body: JSON.stringify({
+          // --corps de la requête--//
           email: email.value,
           password: password.value,
         }),
       };
-      fetch("http://localhost:8000/auth/Login", requestOptions)
+      fetch("http://localhost:8000/auth/Login", requestOptions) //--requête POST--//
         .then((response) => response.json())
         .then((data) => {
-          setToken(data.token);
-          setUserId(data.userId);
-          setName(data.name);
-          setRules(data.rules);
-          setIsAdmin(data.isAdmin);
-          localStorage.setItem("token", JSON.stringify(data.token));
-          localStorage.setItem("name", JSON.stringify(data.name));
+          setToken(data.token); //--récupération du token--//
+          setUserId(data.userId); //--récupération de l'id--//
+          setName(data.name); //--récupération du nom--//
+          setRules(data.rules); //--récupération des validations des règles--//
+          setIsAdmin(data.isAdmin); //--récupération du statut admin ou non admin--//
+          localStorage.setItem("token", JSON.stringify(data.token)); //--stockage du token dans le local storage--//
+          localStorage.setItem("name", JSON.stringify(data.name)); //--stockage du name dans le local storage--//
           if (data.userId === undefined) {
             SwalWelcome.fire({
               title: "",
@@ -133,17 +135,15 @@ export default function Log() {
 
   const handleFormSignUp = (event) => {
     event.preventDefault();
-
-    const name = inputsSignUp.current[0];
-    const email = inputsSignUp.current[1];
-    const password = inputsSignUp.current[2];
-
+    const email = inputsSignUp.current[0]; //--récupération de l'input email--//
+    const password = inputsSignUp.current[1]; //--récupération de l'input password--//
+    const name = inputsSignUp.current[2]; //--récupération de l'input name--//
     if (name.value === "") {
       document.getElementById("nameSignUp").placeholder =
-        "Oups ! Ni nom ni pseudo";
+        "Oups ! Ni nom ni pseudo"; //--message d'erreur name--//
     } else if (
       name.value !== "" &&
-      !/^([a-zA-Z0-9-_]{2,36})$/g.test(name.value)
+      !/^([a-zA-Z0-9-_]{2,36})$/g.test(name.value) //--regex name--//
     ) {
       setErrorMessages({
         name: "nameErrorSignUp",
@@ -151,10 +151,10 @@ export default function Log() {
       });
     } else if (email.value === "") {
       document.getElementById("emailSignUp").placeholder =
-        "Re Oups ! Pas d'email";
+        "Re Oups ! Pas d'email"; //--message d'erreur mail--//
     } else if (
       email.value !== "" &&
-      !/^[\w-.]+@([\w-]+\.)+[\w-]{2,4}$/g.test(email.value)
+      !/^[\w-.]+@([\w-]+\.)+[\w-]{2,4}$/g.test(email.value) //--regex mail--//
     ) {
       setErrorMessages({
         name: "emailErrorSignUp",
@@ -162,28 +162,30 @@ export default function Log() {
       });
     } else if (password.value === "") {
       document.getElementById("passwordSignUp").placeholder =
-        "Re Re oups ! Pas de mot de passe";
+        "Re Re oups ! Pas de mot de passe"; //--message d'erreur password--//
     } else if (
       password.value !== "" &&
       !/^(?=.{10,}$)(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*\W).*$/g.test(
         password.value
-      )
+      ) //--regex password--//
     ) {
       setErrorMessages({ name: "passErrorSignUp", message: errors.pass });
     } else {
       const requestOptions = {
+        //--options de la requête POST--//
         method: "POST",
         headers: {
           "Content-Type": "application/json",
           Accept: "application/json",
         },
         body: JSON.stringify({
+          //--corps de la requête--//
           name: name.value,
           email: email.value,
           password: password.value,
         }),
       };
-      fetch("http://localhost:8000/auth/signup", requestOptions)
+      fetch("http://localhost:8000/auth/signup", requestOptions) //--requête POST--//
         .then((response) => response.json())
         .then((data) => {
           SwalWelcome.fire({
@@ -192,13 +194,13 @@ export default function Log() {
             icon: "success",
             confirmButtonText: "Ok",
           });
-          navigate("/");
-          setAuthMode("signin");
+          setAuthMode("signin"); //--retour à la page de connexion--//
         });
     }
   };
 
   if (authMode === "signin") {
+    //--affichage de la page de connexion--//
     return (
       <div className="Auth-form-container">
         <form className="Auth-form" onSubmit={Login}>
@@ -219,19 +221,19 @@ export default function Log() {
                 ref={addInputsSignIn}
                 id="emailSignIn"
                 name="emailSignIn"
-                autoComplete="username"
+                autoComplete="email"
               />
               {renderErrorMessage("emailErrorSignIn")}
             </div>
             <div className="form-group mt-3">
               <label htmlFor="passwordSignIn">Password</label>
               <input
-                htmlFor="passwordSignIn"
+                id="passwordSignIn"
                 type="password"
                 className="form-control mt-1"
                 placeholder="Enter password"
                 ref={addInputsSignIn}
-                autoComplete="current-password"
+                autoComplete="password"
               />
               {renderErrorMessage("passErrorSignIn")}
             </div>
@@ -246,7 +248,7 @@ export default function Log() {
       </div>
     );
   }
-
+  //--affichage de la page d'inscription--//
   return (
     <div className="Auth-form-container">
       <form className="Auth-form" onSubmit={handleFormSignUp}>
@@ -258,18 +260,7 @@ export default function Log() {
               Sign In
             </span>
           </div>
-          <div className="form-group mt-3">
-            <label htmlFor="nameSignUp">Full Name</label>
-            <input
-              type="name"
-              className="form-control mt-1"
-              placeholder="Full Name"
-              ref={addInputsSignUp}
-              id="nameSignUp"
-              name="nameSignUp"
-            />
-            {renderErrorMessage("nameErrorSignUp")}
-          </div>
+
           <div className="form-group mt-3">
             <label htmlFor="emailSignUp">Email address</label>
             <input
@@ -293,6 +284,18 @@ export default function Log() {
               id="passwordSignUp"
             />
             {renderErrorMessage("passErrorSignUp")}
+          </div>
+          <div className="form-group mt-3">
+            <label htmlFor="nameSignUp">Full Name</label>
+            <input
+              type="name"
+              className="form-control mt-1"
+              placeholder="Full Name"
+              ref={addInputsSignUp}
+              id="nameSignUp"
+              name="nameSignUp"
+            />
+            {renderErrorMessage("nameErrorSignUp")}
           </div>
           <div className="d-grid gap-2 mt-3">
             <button type="submit" className="btn btn-submit">
