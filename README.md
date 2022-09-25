@@ -1,4 +1,3 @@
-![groupomania](../groupomania/client/src/assets/images/icon-left-font.png)
 
 # Créez un réseau social d’entreprise
 
