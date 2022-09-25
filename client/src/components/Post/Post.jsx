@@ -261,34 +261,39 @@ const Post = (props) => {
         name: nameConnected, //--name of user who commented the post--//
       }),
     };
-    await fetch(
-      "http://localhost:8000/posts/" + postId + "/comment", //--fetch to comment post--//
-      requestOptionsNewComment
-    )
-      .then((response) => response.json())
-      .then((data) => {
-        const requestOptions = {
-          //--request options GET--//
-          method: "GET",
-          headers: {
-            "Content-Type": "application/json",
-            Authorization: `Bearer ${tokenConnected}`,
-          },
-        };
-        fetch(
-          "http://localhost:8000/posts/" + postId + "/comments", //--fetch to get all comments of post--//
-          requestOptions
-        )
-          .then((response) => response.json())
-          .then((data) => {
-            fetch("http://localhost:8000/posts", requestOptions) //--fetch to get all posts--//
-              .then((response) => response.json())
-              .then((data) => {
-                const posts = data;
-                setPosts(posts);
-              });
-          });
-      });
+    if (newComment.current[0].value === "") {
+      //--if textArea is empty--//
+      Swal.fire("Veuillez écrire un commentaire");
+    } else {
+      await fetch(
+        "http://localhost:8000/posts/" + postId + "/comment", //--fetch to comment post--//
+        requestOptionsNewComment
+      )
+        .then((response) => response.json())
+        .then((data) => {
+          const requestOptions = {
+            //--request options GET--//
+            method: "GET",
+            headers: {
+              "Content-Type": "application/json",
+              Authorization: `Bearer ${tokenConnected}`,
+            },
+          };
+          fetch(
+            "http://localhost:8000/posts/" + postId + "/comments", //--fetch to get all comments of post--//
+            requestOptions
+          )
+            .then((response) => response.json())
+            .then((data) => {
+              fetch("http://localhost:8000/posts", requestOptions) //--fetch to get all posts--//
+                .then((response) => response.json())
+                .then((data) => {
+                  const posts = data;
+                  setPosts(posts);
+                });
+            });
+        });
+    }
   };
 
   //------------------Get user data------------------//
