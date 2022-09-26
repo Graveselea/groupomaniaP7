@@ -1,7 +1,7 @@
 import { useNavigate } from "react-router-dom";
 import React, { useContext } from "react";
 import logowhite from "../../assets/images/logowhite.webp";
-import "./Header.css";
+import "./Header.min.css";
 import {
   TokenContext,
   UserIdContext,
@@ -50,6 +50,8 @@ function Header() {
       <div className="header">
         <img
           src={logowhite} //--import logo--//
+          width="300"
+          height="auto"
           alt="logo-groupomania"
           className="gpm-banner-logo"
         />

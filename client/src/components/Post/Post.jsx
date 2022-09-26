@@ -3,7 +3,7 @@ import * as Icon from "react-bootstrap-icons";
 import Modal from "react-bootstrap/Modal";
 import photoProfil from "../../assets/images/profile.webp";
 
-import "./Post.css";
+import "./Post.min.css";
 import React, { useState, useRef } from "react";
 import {
   TokenContext,
@@ -409,6 +409,8 @@ const Post = (props) => {
               alt=""
               align="right"
               className="image"
+              width={414}
+              height={414}
             />
             <Card.Text>{post.post}</Card.Text>
             <div className="displayLikes">

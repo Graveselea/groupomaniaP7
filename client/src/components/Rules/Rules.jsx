@@ -1,6 +1,6 @@
 import React from "react";
 import Card from "react-bootstrap/Card";
-import "./Rules.css";
+import "./Rules.min.css";
 
 function Rules() {
   //------------------Return Rules------------------//

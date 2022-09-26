@@ -8,7 +8,7 @@ import {
   RulesInContext,
   UserIdContext,
 } from "../../utils/context/CreateContext";
-import "./Posts.css";
+import "./Posts.min.css";
 import Swal from "sweetalert2";
 
 export default function Posts() {
@@ -232,7 +232,10 @@ export default function Posts() {
         <div className="displayCreatePost">
           <div className="displayTitleCreatePost"></div>
           <form onSubmit={handleSubmit}>
-            <label htmlFor="post" className="labelCreatePost"></label>
+            <label htmlFor="post" className="labelCreatePost">
+              {" "}
+              Créer un post{" "}
+            </label>
             <textarea
               id="post"
               name="post"
