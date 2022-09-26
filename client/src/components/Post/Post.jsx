@@ -433,7 +433,9 @@ const Post = (props) => {
           <hr className="barre-comment"></hr>
           <div className="display-comments">
             <div className="display-new-comment">
-              <label htmlFor="text-new-comment"></label>
+              <label htmlFor="text-new-comment" className="labelCommentInput">
+                Add new comment
+              </label>
               <input
                 type="text"
                 id="text-new-comment"
@@ -523,7 +525,9 @@ const Post = (props) => {
         <hr className="barre-comment"></hr>
         <div className="display-comments">
           <div className="display-new-comment">
-            <label htmlFor="text-new-comment"></label>
+            <label htmlFor="text-new-comment" className="labelCommentInput">
+              Add new comment
+            </label>
             <input
               type="text"
               id="text-new-comment"

@@ -246,7 +246,14 @@ export default function Posts() {
             ></textarea>
             <div className="displayinputImageAndButtonPublish">
               <div className="displayLabelAndInputImage">
-                <label htmlFor="image" id="colorLabelChooseImage"></label>
+                <label
+                  htmlFor="image"
+                  id="colorLabelChooseImage"
+                  className="labelAddImage"
+                >
+                  {" "}
+                  Ajouter une image{" "}
+                </label>
                 <input
                   name="image"
                   type="file"
