@@ -411,8 +411,6 @@ const Post = (props) => {
               alt=""
               align="right"
               className="image"
-              width={414}
-              height={414}
             />
             <Card.Text>{post.post}</Card.Text>
             <div className="displayLikes">

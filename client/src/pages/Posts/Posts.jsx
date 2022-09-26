@@ -230,12 +230,12 @@ export default function Posts() {
         <h1 className="hello">Hello {nameConnected} !</h1>
 
         <div className="displayCreatePost">
-          <div className="displayTitleCreatePost"></div>
-          <form onSubmit={handleSubmit}>
+          <div className="displayTitleCreatePost">
             <label htmlFor="post" className="labelCreatePost">
-              {" "}
-              Créer un post{" "}
+              Créer un post
             </label>
+          </div>
+          <form onSubmit={handleSubmit}>
             <textarea
               id="post"
               name="post"
@@ -246,10 +246,7 @@ export default function Posts() {
             ></textarea>
             <div className="displayinputImageAndButtonPublish">
               <div className="displayLabelAndInputImage">
-                <label htmlFor="image" className="labelAddImage">
-                  {" "}
-                  Ajouter une image{" "}
-                </label>
+                <label htmlFor="image" id="colorLabelChooseImage"></label>
                 <input
                   name="image"
                   type="file"
