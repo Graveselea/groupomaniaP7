@@ -222,6 +222,7 @@ export default function Log() {
                 id="emailSignIn"
                 name="emailSignIn"
                 autoComplete="email"
+                aria-label="email"
               />
               {renderErrorMessage("emailErrorSignIn")}
             </div>
@@ -234,6 +235,7 @@ export default function Log() {
                 placeholder="Enter password"
                 ref={addInputsSignIn}
                 autoComplete="password"
+                aria-label="password"
               />
               {renderErrorMessage("passErrorSignIn")}
             </div>
@@ -270,6 +272,7 @@ export default function Log() {
               name="emailSignUp"
               ref={addInputsSignUp}
               id="emailSignUp"
+              aria-label="email"
             />
             {renderErrorMessage("emailErrorSignUp")}
           </div>
@@ -282,6 +285,7 @@ export default function Log() {
               name="passwordSignUp"
               ref={addInputsSignUp}
               id="passwordSignUp"
+              aria-label="password"
             />
             {renderErrorMessage("passErrorSignUp")}
           </div>
@@ -294,6 +298,7 @@ export default function Log() {
               ref={addInputsSignUp}
               id="nameSignUp"
               name="nameSignUp"
+              aria-label="name"
             />
             {renderErrorMessage("nameErrorSignUp")}
           </div>

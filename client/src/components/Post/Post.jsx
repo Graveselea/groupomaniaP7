@@ -338,6 +338,7 @@ const Post = (props) => {
                       className="styleButtonfontSizeSend"
                       type="SUBMIT"
                       name="POST"
+                      aria-label="send"
                     ></input>
                     <input
                       name="image"
@@ -346,6 +347,7 @@ const Post = (props) => {
                       accept="*"
                       alt="image poster par un utilisateur"
                       id="image"
+                      aria-label="image"
                     />
                     <button
                       className="styleButtonfontSizeAnnulation"
@@ -442,6 +444,7 @@ const Post = (props) => {
                 placeholder="Add your comment here !"
                 ref={addNewComment} // refattribut permet de stocker une référence à un élément ou composant React particulier renvoyé par la render()
                 className="display-new-comment-input"
+                aria-label="add comment"
               />
               <button
                 className="display-new-comment-button"
@@ -534,6 +537,7 @@ const Post = (props) => {
               placeholder="Add your comment here !"
               ref={addNewComment}
               className="display-new-comment-input"
+              aria-label="add comment"
             />
             <button
               className="display-new-comment-button"

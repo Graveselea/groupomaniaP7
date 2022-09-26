@@ -246,11 +246,7 @@ export default function Posts() {
             ></textarea>
             <div className="displayinputImageAndButtonPublish">
               <div className="displayLabelAndInputImage">
-                <label
-                  htmlFor="image"
-                  id="colorLabelChooseImage"
-                  className="labelAddImage"
-                >
+                <label htmlFor="image" className="labelAddImage">
                   {" "}
                   Ajouter une image{" "}
                 </label>
@@ -262,9 +258,15 @@ export default function Posts() {
                   id="image"
                   alt="image poster par un utilisateur"
                   className="inputImage"
+                  aria-label="ajout image"
                 />
               </div>
-              <input className="styleButton" type="submit" value="POST"></input>
+              <input
+                className="styleButton"
+                type="submit"
+                value="POST"
+                aria-label="post"
+              ></input>
             </div>
           </form>
         </div>
