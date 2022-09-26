@@ -94,6 +94,9 @@ body.swal2-shown > [aria-hidden="true"] {
   border-radius: 5px;
   height: 40px;
   width: 100px;
+  font-size: 1.2rem;
+  font-style: bold;
+  box-shadow: 5px 5px 5px rgba(2, 2, 2, 0.659);
 }
 
 .displayCreatePost {

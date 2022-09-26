@@ -431,6 +431,7 @@ const Post = (props) => {
           <hr className="barre-comment"></hr>
           <div className="display-comments">
             <div className="display-new-comment">
+              <label htmlFor="text-new-comment"></label>
               <input
                 type="text"
                 id="text-new-comment"
@@ -520,10 +521,11 @@ const Post = (props) => {
         <hr className="barre-comment"></hr>
         <div className="display-comments">
           <div className="display-new-comment">
+            <label htmlFor="text-new-comment"></label>
             <input
               type="text"
               id="text-new-comment"
-              placeholder="Ajouter un commentaire"
+              placeholder="Add your comment here !"
               ref={addNewComment}
               className="display-new-comment-input"
             />
